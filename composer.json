@@ -1,0 +1,57 @@
+{
+  "name": "nuonic/plugin-installer",
+  "description": "Shopware 6 plugin installer based on composer + metadata from GitHub",
+  "type": "shopware-platform-plugin",
+  "version": "1.0.0",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "nuonic Digital GmbH & Co. KG",
+      "homepage": "https://nuonic.de"
+    }
+  ],
+  "require": {
+    "shopware/core": ">=6.6.0 <6.7.0",
+    "shopware/storefront": ">=6.6.0 <6.7.0"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^2.1.2",
+    "friendsofphp/php-cs-fixer": "^3.66"
+  },
+  "scripts": {
+    "phpstan": "phpstan analyse --memory-limit=2G",
+    "style-check": "php-cs-fixer check",
+    "style-fix": "php-cs-fixer fix"
+  },
+  "config": {
+    "allow-plugins": {
+      "symfony/runtime": true
+    }
+  },
+  "extra": {
+    "copyright": "nuonic Digital GmbH & Co. KG",
+    "author": "nuonic Digital GmbH & Co. KG",
+    "shopware-plugin-class": "NuonicPluginInstaller\\NuonicPluginInstaller",
+    "label": {
+      "de-DE": "Open source plugin installer",
+      "en-GB": "Open source plugin installer"
+    },
+    "description": {
+      "de-DE": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel diam mi. Quisque consectetur condimentum blandit. Integer nunc nisi, porttitor sed nunc bibendum, vestibulum.",
+      "en-GB": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel diam mi. Quisque consectetur condimentum blandit. Integer nunc nisi, porttitor sed nunc bibendum, vestibulum."
+    },
+    "manufacturerLink": {
+      "de-DE": "https://nuonic.de",
+      "en-GB": "https://nuonic.de"
+    },
+    "supportLink": {
+      "de-DE": "https://nuonic.de",
+      "en-GB": "https://nuonic.de"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "NuonicPluginInstaller\\": "src/"
+    }
+  }
+}

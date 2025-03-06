@@ -1,0 +1,14 @@
+build:
+  zip:
+    composer:
+      enabled: true
+    assets:
+      enabled: true
+      enable_es_build_for_admin: false
+      enable_es_build_for_storefront: false
+      es_build_disable_sass: false
+      npm_strict: false
+    pack:
+      excludes: {}
+changelog:
+  enabled: true

@@ -1,0 +1,83 @@
+name: Build
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+env:
+  EXTENSION_NAME: 'NuonicPluginInstaller'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 📋 Install shopware-cli
+        uses: shopware/shopware-cli-action@v1
+        with:
+          version: 'latest'
+
+      - name: 📦 Build & create zip
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
+        run: |
+          shopware-cli extension zip --git-commit ${{ github.sha }} . --release
+          mv ${{ env.EXTENSION_NAME }}-${{ github.sha }}.zip ${{ env.EXTENSION_NAME }}.zip
+
+      - name: ⬆ Upload Artefact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.EXTENSION_NAME }}
+          path: ${{ env.EXTENSION_NAME }}.zip
+
+      - name: ⚙️ Get version
+        run: |
+          echo "EXTENSION_VERSION=$(jq ".version" composer.json -r)" >> $GITHUB_ENV
+
+      - name: 🚥 Check if tag exists
+        uses: mukunku/tag-exists-action@v1.6.0
+        id: checkTag
+        with:
+          tag: ${{ env.EXTENSION_VERSION }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🔎 Validate Zip
+        run: shopware-cli extension validate $(pwd)/${EXTENSION_NAME}.zip
+
+      - name: 📋 Extract Changelog
+        if: steps.checkTag.outputs.exists != 'true'
+        run: shopware-cli extension get-changelog $(pwd)/${EXTENSION_NAME}.zip > /tmp/changelog.txt
+
+      - name: 📦 Unzip
+        run: |
+          unzip -o -q "${EXTENSION_NAME}.zip" -d ./toDeploy
+          mv "${EXTENSION_NAME}.zip" /tmp/
+          find ./ -maxdepth 1 ! -name "toDeploy" ! -name ".git" ! -name "." ! -name ".." -exec rm -rf {} \;
+          mv ./toDeploy/${EXTENSION_NAME}/* ./
+          rm -rf ./toDeploy
+          rm -rf ./vendor
+
+      - name: ✅ Commit
+        if: steps.checkTag.outputs.exists != 'true'
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          git add -f .
+          git commit -m "chore: Build release"
+          git tag ${EXTENSION_VERSION}
+          git push origin ${EXTENSION_VERSION}
+
+      - name: 🚀 Create a GitHub release
+        if: steps.checkTag.outputs.exists != 'true'
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: /tmp/${{ env.EXTENSION_NAME }}.zip
+          tag: ${{ env.EXTENSION_VERSION }}
+          name: ${{ env.EXTENSION_VERSION }}
+          bodyFile: /tmp/changelog.txt
