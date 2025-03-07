@@ -37,6 +37,18 @@
             <tag name="console.command" />
         </service>
 
+        <service id="NuonicPluginInstaller\ScheduledTask\LoadPluginInfo\LoadPluginInfoScheduledTaskHandler">
+            <argument type="service" id="scheduled_task.repository" />
+            <argument type="service" id="logger" />
+            <argument type="service" id="NuonicPluginInstaller\Service\IndexFileServiceInterface" />
+            <argument type="service" id="messenger.default_bus" />
+            <tag name="messenger.message_handler"/>
+        </service>
+
+        <service id="NuonicPluginInstaller\ScheduledTask\LoadPluginInfo\LoadPluginInfoScheduledTask">
+            <tag name="shopware.scheduled.task" />
+        </service>
+
         <service id="NuonicPluginInstaller\ScheduledTask\LoadIndex\LoadIndexScheduledTaskHandler">
             <argument type="service" id="scheduled_task.repository" />
             <argument type="service" id="logger" />
