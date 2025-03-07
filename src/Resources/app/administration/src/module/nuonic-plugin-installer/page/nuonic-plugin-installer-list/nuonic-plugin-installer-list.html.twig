@@ -1,5 +1,12 @@
 {% block nuonic_plugin_installer_index %}
 	<sw-meteor-page	hide-icon>
+		<template	#search-bar>
+			{% block sw_extension_my_extensions_index_smart_bar_search_slot_search_bar %}
+				<sw-search-bar	initial-search-type="ce_plugins"	:placeholder="$tc('nuonic-plugin-installer.extension.listing.placeholderSearchBar')"	@search="onSearch" />
+
+			{% endblock %}
+		</template>
+
 		<div	class="nuonic-plugin-installer-index">
 			<sw-skeleton	v-if="isLoading"	:variant="skeletonVariant" />
 			<div	v-else	class="nuonic-plugin-installer-index__listing-grid">

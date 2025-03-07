@@ -48,5 +48,9 @@ Component.register('nuonic-plugin-installer-list', {
             this.limit = limit;
             this.getList();
         },
+        onSearch(value) {
+            this.term = value;
+            this.getList();
+        },
     },
 });
