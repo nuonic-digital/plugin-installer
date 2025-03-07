@@ -1,0 +1,8 @@
+{
+  "nuonic-plugin-installer": {
+    "extension" : {
+      "title": "OpenSource Plugin Installer",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel diam mi. Quisque consectetur condimentum blandit. Integer nunc nisi, porttitor sed nunc bibendum, vestibulum."
+    }
+  }
+}
