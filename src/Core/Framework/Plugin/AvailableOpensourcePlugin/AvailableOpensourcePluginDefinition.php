@@ -60,7 +60,6 @@ class AvailableOpensourcePluginDefinition extends EntityDefinition
 
             new FkField('plugin_id', 'pluginId', PluginDefinition::class),
             new OneToOneAssociationField('plugin', 'plugin_id', 'id', PluginDefinition::class),
-
         ]);
     }
 }
