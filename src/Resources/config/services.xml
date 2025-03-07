@@ -97,6 +97,7 @@
 
         <service id="NuonicPluginInstaller\Controller\InstallController">
             <argument type="service" id="NuonicPluginInstaller\Service\PackageService" />
+            <argument type="service" id="nuonic_available_opensource_plugin.repository" />
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>

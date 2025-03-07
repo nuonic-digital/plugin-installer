@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace NuonicPluginInstaller\ScheduledTask\LoadPluginInfo;
 
-use NuonicPluginInstaller\Action\LoadIndexAction;
 use NuonicPluginInstaller\Infrastructure\Message\LoadSinglePluginInfoMessage;
-use NuonicPluginInstaller\ScheduledTask\LoadIndex\LoadIndexScheduledTask;
 use NuonicPluginInstaller\Service\IndexFileServiceInterface;
 use Psr\Log\LoggerInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\MessageQueue\ScheduledTask\ScheduledTaskCollection;
 use Shopware\Core\Framework\MessageQueue\ScheduledTask\ScheduledTaskHandler;
-use Symfony\Component\Config\Loader\LoaderResolver;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 

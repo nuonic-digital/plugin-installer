@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace NuonicPluginInstaller\Controller;
 
+use NuonicPluginInstaller\Core\Framework\Plugin\AvailableOpensourcePlugin\AvailableOpensourcePluginCollection;
+use NuonicPluginInstaller\Core\Framework\Plugin\AvailableOpensourcePlugin\AvailableOpensourcePluginEntity;
 use NuonicPluginInstaller\Service\PackageService;
 use NuonicPluginInstaller\Struct\PackageVersion;
 use OpenApi\Attributes as OA;
 use Shopware\Core\Framework\Context;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,9 +21,14 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(defaults: ['_routeScope' => ['api']])]
 class InstallController extends AbstractController
 {
+    /**
+     * @param EntityRepository<AvailableOpensourcePluginCollection> $openSourcePluginRepository
+     */
     public function __construct(
         private readonly PackageService $packageService,
-    ) {}
+        private readonly EntityRepository $openSourcePluginRepository,
+    ) {
+    }
 
     #[OA\Post(
         path: '/api/_action/nuonic-plugin-installer/install',
@@ -40,13 +49,21 @@ class InstallController extends AbstractController
     public function execute(Request $request, Context $context): Response
     {
         $requestData = $request->toArray();
-        if (!isset($requestData['package'], $requestData['version'])) {
+        if (!isset($requestData['openSourcePluginId'])) {
             $this->malformedRequestError();
         }
 
+        /** @var AvailableOpensourcePluginEntity $plugin */
+        $plugin = $this->openSourcePluginRepository->search(new Criteria([$requestData['openSourcePluginId']]), $context)
+            ->first();
+
+        if (!$plugin) {
+            throw $this->createNotFoundException();
+        }
+
         $this->packageService->install(new PackageVersion(
-            $requestData['package'],
-            $requestData['version']
+            $plugin->getPackageName(),
+            $plugin->getAvailableVersion(),
         ), $context);
 
         return new Response(status: 201);
