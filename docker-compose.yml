@@ -1,0 +1,21 @@
+services:
+  shopware:
+    image: dockware/dev:latest
+    container_name: plugin-installer
+    ports:
+      - "80"
+      - "3306"
+    volumes:
+      - ".:/var/www/html/custom/plugins/NuonicPluginInstaller"
+    networks:
+      - web
+    environment:
+      - XDEBUG_ENABLED=1
+      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
+      - SHOPWARE_ADMIN_BUILD_ONLY_EXTENSIONS=1
+      - DISABLE_ADMIN_COMPILATION_TYPECHECK=1
+networks:
+  web:
+    name: web
+    driver: bridge
+    external: true

@@ -8,5 +8,12 @@
             <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService" />
             <argument>NuonicPluginInstaller.config</argument>
         </service>
+        <service id="NuonicPluginInstaller\Core\Framework\Plugin\AvailableOpensourcePlugin\AvailableOpensourcePluginDefinition">
+            <tag name="shopware.entity.definition" entity="nuonic_available_opensource_plugin" />
+        </service>
+
+        <service id="NuonicPluginInstaller\Core\Framework\Plugin\AvailableOpensourcePlugin\Aggregate\AvailableOpensourcePluginTranslation\AvailableOpensourcePluginTranslationDefinition">
+            <tag name="shopware.entity.definition" entity="nuonic_available_opensource_plugin_translation" />
+        </service>
     </services>
 </container>
