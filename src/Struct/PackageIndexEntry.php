@@ -9,6 +9,7 @@ use Shopware\Core\Framework\Struct\Struct;
 class PackageIndexEntry extends Struct
 {
     public function __construct(
+        public string $packageName,
         public string $repositoryUrl,
         public string $ref,
     ) {

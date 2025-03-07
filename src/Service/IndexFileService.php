@@ -61,6 +61,7 @@ class IndexFileService implements IndexFileServiceInterface
             }
 
             $this->packageInformation[$package] = new PackageIndexEntry(
+                packageName: $package,
                 repositoryUrl: $packageInfo['repositoryUrl'],
                 ref: $packageInfo['ref'],
             );
