@@ -4,15 +4,21 @@ declare(strict_types=1);
 
 namespace NuonicPluginInstaller\Action;
 
+use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
 use NuonicPluginInstaller\Config\ConfigValue;
 use NuonicPluginInstaller\Config\PluginConfigService;
 use NuonicPluginInstaller\Exception\IndexLoadFailedException;
+use NuonicPluginInstaller\Exception\LoadIndexFailedException;
 use NuonicPluginInstaller\Service\IndexFileService;
 use Shopware\Core\System\SystemConfig\Exception\InvalidSettingValueException;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class LoadIndexAction
+readonly class LoadIndexAction
 {
     private const FALLBACK_PACKAGE_SOURCE = 'https://raw.githubusercontent.com/nuonic-digital/plugin-data/refs/heads/dev/shopware_extensions_v1.json';
 
@@ -34,13 +40,16 @@ class LoadIndexAction
             $url = self::FALLBACK_PACKAGE_SOURCE;
         }
 
-        $response = $this->httpClient->request('GET', $url);
+        try {
+            $response = $this->httpClient->request('GET', $url);
 
-        if (200 !== $response->getStatusCode()) {
-            throw new IndexLoadFailedException();
+            if (200 !== $response->getStatusCode()) {
+                throw new IndexLoadFailedException();
+            }
+
+            $this->filesystem->write(IndexFileService::FILE_NAME, $response->getContent());
+        } catch (TransportExceptionInterface|ClientExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface|FilesystemException $e) {
+            throw new LoadIndexFailedException(sprintf('Failed to load index file: %s', $e->getMessage()), $e->getCode(), $e);
         }
-
-
-        $this->filesystem->writeStream(IndexFileService::FILE_NAME, $this->httpClient->stream($response));
     }
 }

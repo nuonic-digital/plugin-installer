@@ -24,5 +24,20 @@
         <service id="NuonicPluginInstaller\Service\IndexFileServiceInterface" class="NuonicPluginInstaller\Service\IndexFileService">
             <argument type="service" id="nuonic_plugin_installer.filesystem.private" />
         </service>
+
+        <service id="NuonicPluginInstaller\Command\RefreshIndexCommand">
+            <argument type="service" id="NuonicPluginInstaller\Action\LoadIndexAction" />
+            <tag name="console.command" />
+        </service>
+
+        <service id="NuonicPluginInstaller\ScheduledTask\LoadIndex\LoadIndexScheduledTaskHandler">
+            <argument type="service" id="scheduled_task.repository" />
+            <argument type="service" id="monolog.logger.topi_integration_plugin" />
+            <tag name="messenger.message_handler" />
+        </service>
+
+        <service id="NuonicPluginInstaller\ScheduledTask\LoadIndex\LoadIndexScheduledTask">
+            <tag name="shopware.scheduled.task" />
+        </service>
     </services>
 </container>
