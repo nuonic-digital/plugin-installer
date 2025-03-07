@@ -1,0 +1,4 @@
+framework:
+  messenger:
+    routing:
+      \NuonicPluginInstaller\Infrastructure\Message\LoadSinglePluginInfoMessage: async

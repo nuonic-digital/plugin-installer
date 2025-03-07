@@ -6,6 +6,7 @@ namespace NuonicPluginInstaller\Action;
 
 use Composer\Semver\Semver;
 use NuonicPluginInstaller\Service\IndexFileServiceInterface;
+use NuonicPluginInstaller\Struct\PackageIndexEntry;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -20,9 +21,11 @@ readonly class LoadPluginAction
     ) {
     }
 
-    public function execute(string $packageName): void
+    public function execute(string|PackageIndexEntry $packageInformation): void
     {
-        $packageInformation = $this->indexFileService->getPackageInformation($packageName);
+        if (!$packageInformation instanceof PackageIndexEntry) {
+            $packageInformation = $this->indexFileService->getPackageInformation($packageInformation);
+        }
 
         if (null === $packageInformation) {
             return;
@@ -36,7 +39,7 @@ readonly class LoadPluginAction
         $version = $this->findSuitableVersion($packagistData);
 
         $plugin = $this->availableOpensourcePluginRepository->search(
-            (new Criteria())->addFilter(new EqualsFilter('packageName', $packageName)),
+            (new Criteria())->addFilter(new EqualsFilter('packageName', $packageInformation->packageName)),
             Context::createDefaultContext()
         )->first();
 

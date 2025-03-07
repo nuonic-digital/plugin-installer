@@ -30,27 +30,27 @@
             <argument type="service" id="nuonic_plugin_installer.filesystem.private" />
         </service>
 
-        <service id="NuonicPluginInstaller\Command\RefreshIndexCommand">
+        <service id="NuonicPluginInstaller\Command\RefreshCommand">
             <argument type="service" id="NuonicPluginInstaller\Action\LoadIndexAction" />
-            <tag name="console.command" />
-        </service>
-
-        <service id="NuonicPluginInstaller\Command\TestPluginLoaderAction">
             <argument type="service" id="NuonicPluginInstaller\Action\LoadPluginAction" />
+            <argument type="service" id="NuonicPluginInstaller\Service\IndexFileServiceInterface" />
             <tag name="console.command" />
         </service>
 
         <service id="NuonicPluginInstaller\ScheduledTask\LoadIndex\LoadIndexScheduledTaskHandler">
             <argument type="service" id="scheduled_task.repository" />
-<<<<<<< Updated upstream
             <argument type="service" id="logger" />
-=======
->>>>>>> Stashed changes
+            <argument type="service" id="NuonicPluginInstaller\Action\LoadIndexAction" />
             <tag name="messenger.message_handler" />
         </service>
 
         <service id="NuonicPluginInstaller\ScheduledTask\LoadIndex\LoadIndexScheduledTask">
             <tag name="shopware.scheduled.task" />
+        </service>
+
+        <service id="NuonicPluginInstaller\Infrastructure\Handler\LoadSinglePluginInfoHandler">
+            <argument type="service" id="NuonicPluginInstaller\Action\LoadPluginAction" />
+            <tag name="messenger.message_handler" />
         </service>
     </services>
 </container>
