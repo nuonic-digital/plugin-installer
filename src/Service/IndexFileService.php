@@ -18,7 +18,8 @@ class IndexFileService implements IndexFileServiceInterface
 
     public function __construct(
         private readonly FilesystemOperator $filesystem,
-    ) {}
+    ) {
+    }
 
     public function getPackageInformation(string $packageName): ?PackageIndexEntry
     {
@@ -39,7 +40,6 @@ class IndexFileService implements IndexFileServiceInterface
     }
 
     /**
-     * @return void
      * @throws MalformedIndexException
      */
     private function loadPluginInformationFromFile(): void

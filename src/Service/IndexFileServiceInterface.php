@@ -14,6 +14,7 @@ interface IndexFileServiceInterface
 
     /**
      * @return PackageIndexEntry[]
+     *
      * @throws MalformedIndexException
      */
     public function listPackages(): array;

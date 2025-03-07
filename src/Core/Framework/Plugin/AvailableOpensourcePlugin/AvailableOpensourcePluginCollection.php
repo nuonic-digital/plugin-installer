@@ -8,8 +8,8 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 
 class AvailableOpensourcePluginCollection extends EntityCollection
 {
-	protected function getExpectedClass(): string
-	{
-		return AvailableOpensourcePluginEntity::class;
-	}
+    protected function getExpectedClass(): string
+    {
+        return AvailableOpensourcePluginEntity::class;
+    }
 }

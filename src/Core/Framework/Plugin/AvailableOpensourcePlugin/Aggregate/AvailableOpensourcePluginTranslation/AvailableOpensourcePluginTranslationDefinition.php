@@ -12,28 +12,28 @@ use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 
 class AvailableOpensourcePluginTranslationDefinition extends EntityTranslationDefinition
 {
-	public const ENTITY_NAME = 'nuonic_available_opensource_plugin_translation';
+    public const ENTITY_NAME = 'nuonic_available_opensource_plugin_translation';
 
-	public function getEntityName(): string
-	{
-		return self::ENTITY_NAME;
-	}
+    public function getEntityName(): string
+    {
+        return self::ENTITY_NAME;
+    }
 
-	public function getParentDefinitionClass(): string
-	{
-		return AvailableOpensourcePluginDefinition::class;
-	}
+    public function getParentDefinitionClass(): string
+    {
+        return AvailableOpensourcePluginDefinition::class;
+    }
 
-	public function getEntityClass(): string
-	{
-		return AvailableOpensourcePluginTranslationEntity::class;
-	}
+    public function getEntityClass(): string
+    {
+        return AvailableOpensourcePluginTranslationEntity::class;
+    }
 
-	protected function defineFields(): FieldCollection
-	{
-		return new FieldCollection([
-			(new StringField('name', 'name'))->addFlags(new Required()),
-			(new StringField('description', 'description'))->addFlags(new Required()),
-		]);
-	}
+    protected function defineFields(): FieldCollection
+    {
+        return new FieldCollection([
+            (new StringField('name', 'name'))->addFlags(new Required()),
+            (new StringField('description', 'description'))->addFlags(new Required()),
+        ]);
+    }
 }

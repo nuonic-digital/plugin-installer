@@ -19,7 +19,6 @@ class Migration1741374590CreateEntities extends MigrationStep
 
     public function update(Connection $connection): void
     {
-
         $connection->executeStatement('
             CREATE TABLE IF NOT EXISTS `nuonic_available_opensource_plugin` (
                 `id` BINARY(16) NOT NULL,
