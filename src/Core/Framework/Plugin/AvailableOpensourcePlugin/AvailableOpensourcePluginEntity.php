@@ -24,6 +24,11 @@ class AvailableOpensourcePluginEntity extends Entity
 	/**
 	 * @var string
 	 */
+	protected string $packageName;
+
+	/**
+	 * @var string
+	 */
 	protected string $manufacturer;
 
 	/**
@@ -79,6 +84,16 @@ class AvailableOpensourcePluginEntity extends Entity
 	public function setDescription(string $description): void
 	{
 		$this->description = $description;
+	}
+
+	public function getPackageName(): string
+	{
+		return $this->packageName;
+	}
+
+	public function setPackageName(string $packageName): void
+	{
+		$this->packageName = $packageName;
 	}
 
 	public function getManufacturer(): string
