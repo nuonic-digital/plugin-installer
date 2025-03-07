@@ -1,8 +1,7 @@
 <?xml version="1.0" ?>
 
 <container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xmlns="http://symfony.com/schema/dic/services"
-           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    xmlns="http://symfony.com/schema/dic/services" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="NuonicPluginInstaller\Config\PluginConfigService">
             <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService" />
@@ -24,6 +23,10 @@
         <service id="NuonicPluginInstaller\Action\LoadPluginAction">
             <argument type="service" id="nuonic_available_opensource_plugin.repository" />
             <argument type="service" id="NuonicPluginInstaller\Service\IndexFileServiceInterface" />
+            <argument type="service" id="http_client" />
+            <argument type="service" id="cache.app"/>
+            <argument type="service" id="language.repository"/>
+            <argument>%kernel.shopware_version%</argument>
         </service>
 
         <service id="NuonicPluginInstaller\Service\IndexFileServiceInterface" class="NuonicPluginInstaller\Service\IndexFileService">
@@ -63,6 +66,10 @@
         <service id="NuonicPluginInstaller\Infrastructure\Handler\LoadSinglePluginInfoHandler">
             <argument type="service" id="NuonicPluginInstaller\Action\LoadPluginAction" />
             <tag name="messenger.message_handler" />
+        </service>
+        <service id="NuonicPluginInstaller\Command\TestPluginLoaderAction">
+            <argument type="service" id="NuonicPluginInstaller\Action\LoadPluginAction" />
+            <tag name="console.command" />
         </service>
     </services>
 </container>

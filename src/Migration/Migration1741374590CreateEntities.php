@@ -22,8 +22,6 @@ class Migration1741374590CreateEntities extends MigrationStep
         $connection->executeStatement('
             CREATE TABLE IF NOT EXISTS `nuonic_available_opensource_plugin` (
                 `id` BINARY(16) NOT NULL,
-                `name` VARCHAR(255) NOT NULL,
-                `description` LONGTEXT NOT NULL,
                 `manufacturer` VARCHAR(255) NOT NULL,
                 `manufacturer_link` VARCHAR(255) NOT NULL,
                 `icon` VARCHAR(255),
