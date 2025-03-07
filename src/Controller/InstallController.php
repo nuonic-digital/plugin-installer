@@ -19,8 +19,7 @@ class InstallController extends AbstractController
 {
     public function __construct(
         private readonly PackageService $packageService,
-    ) {
-    }
+    ) {}
 
     #[OA\Post(
         path: '/api/_action/nuonic-plugin-installer/install',
@@ -35,7 +34,7 @@ class InstallController extends AbstractController
     #[Route(
         path: '/api/_action/nuonic-plugin-installer/install',
         name: 'api.action.nuonic_plugin_installer.install.execute',
-        defaults: ['auth_required' => false],
+        defaults: ['auth_required' => true],
         methods: ['POST']
     )]
     public function execute(Request $request, Context $context): Response
