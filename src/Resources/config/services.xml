@@ -71,5 +71,35 @@
             <argument type="service" id="NuonicPluginInstaller\Action\LoadPluginAction" />
             <tag name="console.command" />
         </service>
+
+        <service id="NuonicPluginInstaller\Service\PackageService">
+            <argument type="service" id="Shopware\Core\Framework\Plugin\Composer\CommandExecutor" />
+            <argument type="service" id="Shopware\Core\Framework\Plugin\PluginService" />
+        </service>
+
+        <service id="NuonicPluginInstaller\Subscriber\RemovePackageSubscriber">
+            <argument type="service" id="NuonicPluginInstaller\Service\PackageService" />
+            <argument type="service" id="nuonic_available_opensource_plugin.repository" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <service id="NuonicPluginInstaller\Subscriber\MarkInstalledPluginSubscriber">
+            <argument type="service" id="nuonic_available_opensource_plugin.repository" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <service id="NuonicPluginInstaller\Controller\MediaProxyController">
+            <argument type="service" id="http_client" />
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+
+        <service id="NuonicPluginInstaller\Controller\InstallController">
+            <argument type="service" id="NuonicPluginInstaller\Service\PackageService" />
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
     </services>
 </container>

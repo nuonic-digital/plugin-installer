@@ -6,6 +6,7 @@ namespace NuonicPluginInstaller\Core\Framework\Plugin\AvailableOpensourcePlugin;
 
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
+use Shopware\Core\Framework\Plugin\PluginEntity;
 
 class AvailableOpensourcePluginEntity extends Entity
 {
@@ -31,7 +32,7 @@ class AvailableOpensourcePluginEntity extends Entity
 
     protected string $availableVersion;
 
-    protected bool $isInstalled;
+    protected PluginEntity $plugin;
 
     public function getName(): string
     {
@@ -133,14 +134,14 @@ class AvailableOpensourcePluginEntity extends Entity
         $this->availableVersion = $availableVersion;
     }
 
-    public function isInstalled(): bool
+    public function getPlugin(): PluginEntity
     {
-        return $this->isInstalled;
+        return $this->plugin;
     }
 
-    public function setIsInstalled(bool $isInstalled): void
+    public function setPlugin(PluginEntity $plugin): void
     {
-        $this->isInstalled = $isInstalled;
+        $this->plugin = $plugin;
     }
 
     public function getApiAlias(): string

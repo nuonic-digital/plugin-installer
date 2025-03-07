@@ -137,7 +137,6 @@ readonly class LoadPluginAction
         $id = $plugin?->getId() ?? Uuid::randomHex();
 
         $pluginData['id'] = $id;
-        $pluginData['isInstalled'] = $plugin && $plugin->isInstalled();
 
         $this->availableOpensourcePluginRepository->upsert([$pluginData], Context::createDefaultContext());
     }
