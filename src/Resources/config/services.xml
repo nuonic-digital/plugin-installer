@@ -32,7 +32,7 @@
 
         <service id="NuonicPluginInstaller\ScheduledTask\LoadIndex\LoadIndexScheduledTaskHandler">
             <argument type="service" id="scheduled_task.repository" />
-            <argument type="service" id="monolog.logger.topi_integration_plugin" />
+            <argument type="service" id="logger" />
             <tag name="messenger.message_handler" />
         </service>
 
