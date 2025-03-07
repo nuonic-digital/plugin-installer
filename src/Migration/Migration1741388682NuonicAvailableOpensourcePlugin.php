@@ -23,9 +23,8 @@ class Migration1741388682NuonicAvailableOpensourcePlugin extends MigrationStep
     {
         $query = <<<'SQL'
             ALTER TABLE nuonic_available_opensource_plugin ADD plugin_id BINARY(16) DEFAULT NULL, DROP name, DROP description, DROP is_installed, CHANGE package_name package_name VARCHAR(255) NOT NULL;
-
-ALTER TABLE nuonic_available_opensource_plugin ADD CONSTRAINT fk.nuonic_available_opensource_plugin.plugin_id FOREIGN KEY (plugin_id) REFERENCES plugin (id) ON UPDATE CASCADE ON DELETE SET NULL;
-SQL;
+            ALTER TABLE nuonic_available_opensource_plugin ADD CONSTRAINT `fk.nuonic_available_opensource_plugin.plugin_id` FOREIGN KEY (plugin_id) REFERENCES plugin (id) ON UPDATE CASCADE ON DELETE SET NULL;
+            SQL;
 
         $connection->executeStatement($query);
     }

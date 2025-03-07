@@ -32,9 +32,9 @@ class AvailableOpensourcePluginEntity extends Entity
 
     protected string $availableVersion;
 
-    protected string $pluginId;
+    protected ?string $pluginId;
 
-    protected PluginEntity $plugin;
+    protected ?PluginEntity $plugin;
 
     public function getName(): string
     {
@@ -136,22 +136,22 @@ class AvailableOpensourcePluginEntity extends Entity
         $this->availableVersion = $availableVersion;
     }
 
-    public function getPluginId(): string
+    public function getPluginId(): ?string
     {
         return $this->pluginId;
     }
 
-    public function setPluginId(string $pluginId): void
+    public function setPluginId(?string $pluginId): void
     {
         $this->pluginId = $pluginId;
     }
 
-    public function getPlugin(): PluginEntity
+    public function getPlugin(): ?PluginEntity
     {
         return $this->plugin;
     }
 
-    public function setPlugin(PluginEntity $plugin): void
+    public function setPlugin(?PluginEntity $plugin): void
     {
         $this->plugin = $plugin;
     }
