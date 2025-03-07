@@ -44,7 +44,7 @@ class AvailableOpensourcePluginDefinition extends EntityDefinition
 			(new TranslatedField('description', 'description'))->addFlags(new Required()),
 			(new StringField('package_name', 'packageName'))->addFlags(new Required()),
 			(new StringField('manufacturer', 'manufacturer'))->addFlags(new Required()),
-			(new StringField('manufacturerLink', 'manufacturerLink'))->addFlags(new Required()),
+			(new StringField('manufacturer_link', 'manufacturerLink'))->addFlags(new Required()),
 			(new StringField('icon', 'icon'))->addFlags(),
 			(new JsonField('images', 'images'))->addFlags(),
 			(new StringField('license', 'license'))->addFlags(new Required()),

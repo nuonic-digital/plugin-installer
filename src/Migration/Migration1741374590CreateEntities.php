@@ -41,14 +41,14 @@ class Migration1741374590CreateEntities extends MigrationStep
 
         $connection->executeStatement('
             CREATE TABLE IF NOT EXISTS `nuonic_available_opensource_plugin_translation` (
-                `available_opensource_plugin_id` BINARY(16) NOT NULL,
+                `nuonic_available_opensource_plugin_id` BINARY(16) NOT NULL,
                 `language_id` BINARY(16) NOT NULL,
                 `name` VARCHAR(255) NOT NULL,
                 `description` LONGTEXT NOT NULL,
                 `created_at` DATETIME(3) NOT NULL,
                 `updated_at` DATETIME(3),
-                PRIMARY KEY (`available_opensource_plugin_id`, `language_id`),
-                CONSTRAINT `fk.aop_translation.available_opensource_plugin_id` FOREIGN KEY (`available_opensource_plugin_id`)
+                PRIMARY KEY (`nuonic_available_opensource_plugin_id`, `language_id`),
+                CONSTRAINT `fk.aop_translation.available_opensource_plugin_id` FOREIGN KEY (`nuonic_available_opensource_plugin_id`)
                     REFERENCES `nuonic_available_opensource_plugin` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
                 CONSTRAINT `fk.aop_translation.language_id` FOREIGN KEY (`language_id`)
                     REFERENCES `language` (`id`) ON DELETE CASCADE ON UPDATE CASCADE

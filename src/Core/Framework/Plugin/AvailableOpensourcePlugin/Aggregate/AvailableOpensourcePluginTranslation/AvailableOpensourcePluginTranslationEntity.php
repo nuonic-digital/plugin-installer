@@ -9,13 +9,13 @@ use Shopware\Core\Framework\DataAbstractionLayer\TranslationEntity;
 
 class AvailableOpensourcePluginTranslationEntity extends TranslationEntity
 {
-	protected string $availableOpensourcePluginId;
+	protected string $nuonicAvailableOpensourcePluginId;
 
 	protected string $name;
 
 	protected string $description;
 
-	protected AvailableOpensourcePluginEntity $availableOpensourcePlugin;
+	protected AvailableOpensourcePluginEntity $nuonicAvailableOpensourcePlugin;
 
 	public function getName(): string
 	{
@@ -37,23 +37,23 @@ class AvailableOpensourcePluginTranslationEntity extends TranslationEntity
 		$this->description = $description;
 	}
 
-	public function getAvailableOpensourcePluginId(): string
+	public function getNuonicAvailableOpensourcePluginId(): string
 	{
-		return $this->availableOpensourcePluginId;
+		return $this->nuonicAvailableOpensourcePluginId;
 	}
 
-	public function setAvailableOpensourcePluginId(string $availableOpensourcePluginId): void
+	public function setNuonicAvailableOpensourcePluginId(string $nuonicAvailableOpensourcePluginId): void
 	{
-		$this->availableOpensourcePluginId = $availableOpensourcePluginId;
+		$this->nuonicAvailableOpensourcePluginId = $nuonicAvailableOpensourcePluginId;
 	}
 
-	public function getAvailableOpensourcePlugin(): AvailableOpensourcePluginEntity
+	public function getNuonicAvailableOpensourcePlugin(): AvailableOpensourcePluginEntity
 	{
-		return $this->availableOpensourcePlugin;
+		return $this->nuonicAvailableOpensourcePlugin;
 	}
 
-	public function setAvailableOpensourcePlugin(AvailableOpensourcePluginEntity $availableOpensourcePlugin): void
+	public function setNuonicAvailableOpensourcePlugin(AvailableOpensourcePluginEntity $nuonicAvailableOpensourcePlugin): void
 	{
-		$this->availableOpensourcePlugin = $availableOpensourcePlugin;
+		$this->nuonicAvailableOpensourcePlugin = $nuonicAvailableOpensourcePlugin;
 	}
 }
