@@ -15,5 +15,15 @@
         <service id="NuonicPluginInstaller\Core\Framework\Plugin\AvailableOpensourcePlugin\Aggregate\AvailableOpensourcePluginTranslation\AvailableOpensourcePluginTranslationDefinition">
             <tag name="shopware.entity.definition" entity="nuonic_available_opensource_plugin_translation" />
         </service>
+
+        <service id="NuonicPluginInstaller\Action\LoadIndexAction">
+            <argument type="service" id="NuonicPluginInstaller\Config\PluginConfigService" />
+            <argument type="service" id="http_client" />
+            <argument type="service" id="nuonic_plugin_installer.filesystem.private" />
+        </service>
+
+        <service id="NuonicPluginInstaller\Service\IndexFileServiceInterface" class="NuonicPluginInstaller\Service\IndexFileService">
+            <argument type="service" id="nuonic_plugin_installer.filesystem.private" />
+        </service>
     </services>
 </container>
