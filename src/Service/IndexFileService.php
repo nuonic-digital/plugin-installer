@@ -16,6 +16,8 @@ class IndexFileService implements IndexFileServiceInterface
     /** @var array<string, PackageIndexEntry> */
     private array $packageInformation = [];
 
+    private \DateTimeInterface $generatedAt;
+
     public function __construct(
         private readonly FilesystemOperator $filesystem,
     ) {
@@ -39,6 +41,24 @@ class IndexFileService implements IndexFileServiceInterface
         return $this->packageInformation;
     }
 
+    public function getGeneratedAt(): \DateTimeInterface
+    {
+        if (empty($this->generatedAt)) {
+            $this->loadPluginInformationFromFile();
+        }
+
+        return $this->generatedAt;
+    }
+
+    public function getLastModifiedAt(): ?\DateTimeInterface
+    {
+        try {
+            return new \DateTime('@'.$this->filesystem->lastModified(self::FILE_NAME));
+        } catch (FilesystemException|\DateMalformedStringException $e) {
+            return null;
+        }
+    }
+
     /**
      * @throws MalformedIndexException
      */
@@ -58,8 +78,14 @@ class IndexFileService implements IndexFileServiceInterface
             throw new MalformedIndexException('Package information is missing.');
         }
 
+        if (!isset($data['generatedAt'])) {
+            throw new MalformedIndexException('Metadata is missing.');
+        }
+
+        $this->generatedAt = new \DateTime('@'.$data['generatedAt']);
+
         foreach ($data['extensions'] as $package => $packageInfo) {
-            if (!isset($packageInfo['repositoryUrl'], $packageInfo['ref'])) {
+            if (!isset($packageInfo['repositoryUrl'], $packageInfo['ref'], $packageInfo['latestCommitTime'])) {
                 throw new MalformedIndexException(sprintf('Package information is missing required fields for package: %s', $package));
             }
 
@@ -67,6 +93,7 @@ class IndexFileService implements IndexFileServiceInterface
                 packageName: $package,
                 repositoryUrl: $packageInfo['repositoryUrl'],
                 ref: $packageInfo['ref'],
+                latestCommitTime: new \DateTime('@'.$packageInfo['latestCommitTime']),
             );
         }
     }

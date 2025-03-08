@@ -18,4 +18,6 @@ interface IndexFileServiceInterface
      * @throws MalformedIndexException
      */
     public function listPackages(): array;
+
+    public function getLastModifiedAt(): ?\DateTimeInterface;
 }

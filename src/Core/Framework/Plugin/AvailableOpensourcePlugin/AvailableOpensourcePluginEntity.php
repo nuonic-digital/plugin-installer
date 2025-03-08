@@ -32,6 +32,10 @@ class AvailableOpensourcePluginEntity extends Entity
 
     protected string $availableVersion;
 
+    protected \DateTimeInterface $lastSeenAt;
+
+    protected \DateTimeInterface $lastCommitTime;
+
     protected ?string $pluginId;
 
     protected ?PluginEntity $plugin;
@@ -154,6 +158,26 @@ class AvailableOpensourcePluginEntity extends Entity
     public function setPlugin(?PluginEntity $plugin): void
     {
         $this->plugin = $plugin;
+    }
+
+    public function getLastSeenAt(): \DateTimeInterface
+    {
+        return $this->lastSeenAt;
+    }
+
+    public function setLastSeenAt(\DateTimeInterface $lastSeenAt): void
+    {
+        $this->lastSeenAt = $lastSeenAt;
+    }
+
+    public function getLastCommitTime(): \DateTimeInterface
+    {
+        return $this->lastCommitTime;
+    }
+
+    public function setLastCommitTime(\DateTimeInterface $lastCommitTime): void
+    {
+        $this->lastCommitTime = $lastCommitTime;
     }
 
     public function getApiAlias(): string

@@ -6,6 +6,7 @@ namespace NuonicPluginInstaller\Core\Framework\Plugin\AvailableOpensourcePlugin;
 
 use NuonicPluginInstaller\Core\Framework\Plugin\AvailableOpensourcePlugin\Aggregate\AvailableOpensourcePluginTranslation\AvailableOpensourcePluginTranslationDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\DateField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
@@ -52,10 +53,12 @@ class AvailableOpensourcePluginDefinition extends EntityDefinition
             (new StringField('license', 'license'))->addFlags(new Required()),
             (new StringField('link', 'link'))->addFlags(new Required()),
             (new StringField('available_version', 'availableVersion'))->addFlags(new Required()),
+            (new DateField('last_seen_at', 'lastSeenAt'))->addFlags(new Required()),
+            (new DateField('last_commit_time', 'lastCommitTime'))->addFlags(new Required()),
 
             (new TranslationsAssociationField(
                 AvailableOpensourcePluginTranslationDefinition::class,
-                'available_opensource_plugin_id'
+                'nuonic_available_opensource_plugin_id'
             ))->addFlags(new ApiAware(), new Required()),
 
             new FkField('plugin_id', 'pluginId', PluginDefinition::class),

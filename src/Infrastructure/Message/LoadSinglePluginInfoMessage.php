@@ -10,6 +10,7 @@ readonly class LoadSinglePluginInfoMessage
 {
     public function __construct(
         public PackageIndexEntry $package,
+        public \DateTimeInterface $now,
     ) {
     }
 }

@@ -35,7 +35,7 @@ readonly class LoadPluginAction
     ) {
     }
 
-    public function execute(string|PackageIndexEntry $packageInformation): void
+    public function execute(string|PackageIndexEntry $packageInformation, \DateTimeInterface $now): void
     {
         if (!$packageInformation instanceof PackageIndexEntry) {
             $packageInformation = $this->indexFileService->getPackageInformation($packageInformation);
@@ -73,12 +73,16 @@ readonly class LoadPluginAction
 
         $pluginData = [
             'packageName' => $packageInformation->packageName,
-            'manufacturer' => \implode(', ', \array_column($version['authors'], 'name')),
-            'manufacturerLink' => $version['extra']['manufacturerLink']['en-GB'],
+            'manufacturer' => implode(', ', array_column($version['authors'], 'name')),
+            'manufacturerLink' => array_values($version['extra']['manufacturerLink'] ?? ['https://github.com'])[0], // get first translation - TODO: fix
             'license' => $version['license'][0],
             'link' => $repositoryUrl,
             'availableVersion' => $version['version'],
         ];
+
+        if ('' === trim($pluginData['manufacturer'])) {
+            $pluginData['manufacturer'] = 'UNKNOWN';
+        }
 
         if (!$isComposer) {
             $extensionYmlResponse = $this->httpClient->request('GET', $extensionYmlUrl);
@@ -137,6 +141,8 @@ readonly class LoadPluginAction
         $id = $plugin?->getId() ?? Uuid::randomHex();
 
         $pluginData['id'] = $id;
+        $pluginData['lastSeenAt'] = $now;
+        $pluginData['lastCommitTime'] = $packageInformation->latestCommitTime;
 
         $this->availableOpensourcePluginRepository->upsert([$pluginData], Context::createDefaultContext());
     }
@@ -150,6 +156,10 @@ readonly class LoadPluginAction
 
         foreach ($versions as $version => $versionData) {
             if (\str_contains($version, 'dev') || \str_contains($version, 'alpha') || \str_contains($version, 'beta') || \str_contains($version, 'rc') || \str_contains($version, 'main')) {
+                continue;
+            }
+
+            if (!isset($versionData['require']['shopware/core'])) {
                 continue;
             }
 

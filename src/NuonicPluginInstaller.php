@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace NuonicPluginInstaller;
 
 use Doctrine\DBAL\Connection;
-use NuonicPluginInstaller\Action\LoadIndexAction;
+use NuonicPluginInstaller\Action\RefreshAction;
 use Shopware\Core\Framework\Plugin;
 use Shopware\Core\Framework\Plugin\Context\InstallContext;
 use Shopware\Core\Framework\Plugin\Context\UninstallContext;
@@ -39,10 +39,10 @@ class NuonicPluginInstaller extends Plugin
         $configLoader->load($confDir.'/{packages}/*.yaml', 'glob');
     }
 
-    public function uninstall(UninstallContext $context): void
+    public function uninstall(UninstallContext $uninstallContext): void
     {
-        parent::uninstall($context);
-        if ($context->keepUserData()) {
+        parent::uninstall($uninstallContext);
+        if ($uninstallContext->keepUserData()) {
             return;
         }
         $connection = $this->container->get(Connection::class);
@@ -53,14 +53,14 @@ class NuonicPluginInstaller extends Plugin
 
     public function postInstall(InstallContext $installContext): void
     {
-        if ($action = $this->container->get(LoadIndexAction::class)) {
+        if ($action = $this->container->get(RefreshAction::class)) {
             $action->execute();
         }
     }
 
     public function postUpdate(UpdateContext $updateContext): void
     {
-        if ($action = $this->container->get(LoadIndexAction::class)) {
+        if ($action = $this->container->get(RefreshAction::class)) {
             $action->execute();
         }
     }

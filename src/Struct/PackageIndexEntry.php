@@ -12,6 +12,7 @@ class PackageIndexEntry extends Struct
         public string $packageName,
         public string $repositoryUrl,
         public string $ref,
+        public \DateTimeInterface $latestCommitTime,
     ) {
     }
 }

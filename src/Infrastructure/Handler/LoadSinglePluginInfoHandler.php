@@ -18,6 +18,6 @@ readonly class LoadSinglePluginInfoHandler
 
     public function __invoke(LoadSinglePluginInfoMessage $message): void
     {
-        $this->loadPluginAction->execute($message->package);
+        $this->loadPluginAction->execute($message->package, $message->now);
     }
 }

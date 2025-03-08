@@ -31,7 +31,7 @@ class TestPluginLoaderAction extends Command
     // Actual code executed in the command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->loadPluginAction->execute($input->getOption('packageName'));
+        $this->loadPluginAction->execute($input->getOption('packageName'), new \DateTime());
 
         return Command::SUCCESS;
     }
