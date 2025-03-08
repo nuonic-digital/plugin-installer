@@ -54,7 +54,11 @@ class IndexFileService implements IndexFileServiceInterface
             throw new MalformedIndexException(sprintf('JSON decoding failed: %s', $e->getMessage()), $e->getCode(), $e);
         }
 
-        foreach ($data as $package => $packageInfo) {
+        if (!isset($data['extensions']) || !is_array($data['extensions'])) {
+            throw new MalformedIndexException('Package information is missing.');
+        }
+
+        foreach ($data['extensions'] as $package => $packageInfo) {
             if (!isset($packageInfo['repositoryUrl'], $packageInfo['ref'])) {
                 throw new MalformedIndexException(sprintf('Package information is missing required fields for package: %s', $package));
             }
