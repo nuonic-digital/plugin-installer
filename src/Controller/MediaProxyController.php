@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 #[Route(defaults: ['_routeScope' => ['api']])]
@@ -17,6 +19,7 @@ class MediaProxyController extends AbstractController
 {
     public function __construct(
         private HttpClientInterface $client,
+        private CacheInterface $cache,
     ) {
     }
 
@@ -49,13 +52,26 @@ class MediaProxyController extends AbstractController
             return $this->malformedRequestError();
         }
 
-        $response = $this->client->request('GET', $url);
+        $response = $this->cache->get($url, function (ItemInterface $item) use ($url): array {
+            $response = $this->client->request('GET', $url);
+            $statusCode = $response->getStatusCode();
 
-        if (Response::HTTP_OK !== $response->getStatusCode()) {
-            return new Response(status: $response->getStatusCode());
+            if (Response::HTTP_OK !== $statusCode) {
+                // do not cache error / not found responses
+                $item->expiresAfter(0);
+            }
+
+            return [
+                'statusCode' => $statusCode,
+                'content' => $response->getContent(false),
+            ];
+        });
+
+        if (Response::HTTP_OK !== $response['statusCode']) {
+            new Response(status: $response['statusCode']);
         }
 
-        return new Response($response->getContent());
+        return new Response($response['content']);
     }
 
     protected function malformedRequestError(): Response

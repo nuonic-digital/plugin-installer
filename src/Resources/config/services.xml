@@ -90,6 +90,7 @@
 
         <service id="NuonicPluginInstaller\Controller\MediaProxyController">
             <argument type="service" id="http_client" />
+            <argument type="service" id="cache.app" />
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
