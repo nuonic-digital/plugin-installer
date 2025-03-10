@@ -20,7 +20,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 readonly class LoadIndexAction
 {
-    private const FALLBACK_PACKAGE_SOURCE = 'https://raw.githubusercontent.com/nuonic-digital/plugin-data/refs/heads/dev/shopware_extensions_v1.json';
+    private const FALLBACK_PACKAGE_SOURCE = 'https://plugin-data.nuonic.dev/shopware_extensions_v1.json';
 
     public function __construct(
         private PluginConfigService $config,

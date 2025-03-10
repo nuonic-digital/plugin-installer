@@ -10,7 +10,7 @@
             <label>Package source URL</label>
             <label lang="de-DE">URL der Paketquelle</label>
             <placeholder>https://raw.githubusercontent.com/....</placeholder>
-            <defaultValue>https://raw.githubusercontent.com/nuonic-digital/plugin-data/refs/heads/dev/shopware_extensions_v1.json</defaultValue>
+            <defaultValue>https://plugin-data.nuonic.dev/shopware_extensions_v1.json</defaultValue>
             <required>true</required>
             <helpText>The plugin will load it's package index from the given package source url</helpText>
             <helpText lang="de-DE">Das Plugin wird seinen Paketindex von der angegebenen Paketquelle laden</helpText>
