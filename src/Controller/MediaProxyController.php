@@ -46,9 +46,8 @@ class MediaProxyController extends AbstractController
     )]
     public function execute(Request $request): Response
     {
-        /** @var string|null $url */
-        $url = $request->query['url'];
-        if (is_null($url) || !str_starts_with($url, 'https://raw.githubusercontent.com/')) {
+        $url = $request->query->getString('url');
+        if ('' === $url || !str_starts_with($url, 'https://raw.githubusercontent.com/')) {
             return $this->malformedRequestError();
         }
 
