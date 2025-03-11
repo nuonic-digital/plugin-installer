@@ -101,6 +101,7 @@
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
+            <tag name="controller.service_arguments" />
         </service>
 
         <service id="NuonicPluginInstaller\Controller\InstallController">
@@ -109,6 +110,7 @@
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>
+            <tag name="controller.service_arguments" />
         </service>
 
         <service id="NuonicPluginInstaller\Action\CleanupPluginsTask">
