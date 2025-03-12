@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NuonicPluginInstaller\Subscriber;
 
 use NuonicPluginInstaller\Core\Framework\Plugin\AvailableOpensourcePlugin\AvailableOpensourcePluginCollection;
+use NuonicPluginInstaller\Core\Framework\Plugin\AvailableOpensourcePlugin\AvailableOpensourcePluginEntity;
 use NuonicPluginInstaller\Service\PackageService;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -44,6 +45,7 @@ readonly class RemovePackageSubscriber implements EventSubscriberInterface
         $criteria = (new Criteria())
             ->addFilter(new EqualsFilter('packageName', $event->getPlugin()->getComposerName()));
 
+        /** @var AvailableOpensourcePluginEntity|null $openSourcePlugin */
         $openSourcePlugin = $this->openSourcePluginRepository->search(
             $criteria,
             $context

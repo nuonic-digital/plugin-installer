@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NuonicPluginInstaller\Command;
 
 use NuonicPluginInstaller\Action\RefreshAction;
+use Shopware\Core\Framework\Context;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,7 +22,7 @@ class RefreshCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->refreshAction->execute(false);
+        $this->refreshAction->execute(Context::createCLIContext(), false);
 
         return Command::SUCCESS;
     }

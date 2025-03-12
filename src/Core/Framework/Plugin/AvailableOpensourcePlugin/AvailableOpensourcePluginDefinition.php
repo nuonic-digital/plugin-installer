@@ -43,8 +43,8 @@ class AvailableOpensourcePluginDefinition extends EntityDefinition
     {
         return new FieldCollection([
             (new IdField('id', 'id'))->addFlags(new Required(), new PrimaryKey()),
-            (new TranslatedField('name', 'name'))->addFlags(new Required()),
-            (new TranslatedField('description', 'description'))->addFlags(new Required()),
+            (new TranslatedField('name'))->addFlags(new Required()),
+            (new TranslatedField('description'))->addFlags(new Required()),
             (new StringField('package_name', 'packageName'))->addFlags(new Required()),
             (new StringField('manufacturer', 'manufacturer'))->addFlags(new Required()),
             (new StringField('manufacturer_link', 'manufacturerLink'))->addFlags(new Required()),

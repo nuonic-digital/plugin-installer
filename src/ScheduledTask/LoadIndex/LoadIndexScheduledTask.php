@@ -15,6 +15,6 @@ class LoadIndexScheduledTask extends ScheduledTask
 
     public static function getDefaultInterval(): int
     {
-        return 1_800;
+        return 3_600; // 1 hour
     }
 }

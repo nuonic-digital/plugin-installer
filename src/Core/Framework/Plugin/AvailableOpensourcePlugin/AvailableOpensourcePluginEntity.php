@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NuonicPluginInstaller\Core\Framework\Plugin\AvailableOpensourcePlugin;
 
+use Shopware\Core\Content\Media\MediaEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
 use Shopware\Core\Framework\Plugin\PluginEntity;
@@ -24,6 +25,7 @@ class AvailableOpensourcePluginEntity extends Entity
 
     protected ?string $icon;
 
+    /** @var MediaEntity[]|null */
     protected ?array $images;
 
     protected string $license;
@@ -100,11 +102,18 @@ class AvailableOpensourcePluginEntity extends Entity
         $this->icon = $icon;
     }
 
+    /**
+     * @return MediaEntity[]|null
+     */
     public function getImages(): ?array
     {
         return $this->images;
     }
 
+    /**
+     * @param MediaEntity[]|null $images
+     * @return void
+     */
     public function setImages(?array $images): void
     {
         $this->images = $images;

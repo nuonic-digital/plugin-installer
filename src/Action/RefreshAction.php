@@ -20,13 +20,13 @@ readonly class RefreshAction
     ) {
     }
 
-    public function execute(bool $async = true): void
+    public function execute(Context $context, bool $async = true): void
     {
         $now = new \DateTime();
         $this->loadIndexAction->execute();
 
         $this->cleanupPluginsTask->execute(
-            Context::createDefaultContext(),
+            $context,
             $now,
         );
 

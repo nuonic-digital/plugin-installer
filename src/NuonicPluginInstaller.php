@@ -53,15 +53,11 @@ class NuonicPluginInstaller extends Plugin
 
     public function postInstall(InstallContext $installContext): void
     {
-        if ($action = $this->container->get(RefreshAction::class)) {
-            $action->execute();
-        }
+        $this->container->get(RefreshAction::class)->execute($installContext->getContext());
     }
 
     public function postUpdate(UpdateContext $updateContext): void
     {
-        if ($action = $this->container->get(RefreshAction::class)) {
-            $action->execute();
-        }
+        $this->container->get(RefreshAction::class)->execute($updateContext->getContext());
     }
 }

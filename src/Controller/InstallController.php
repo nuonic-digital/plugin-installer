@@ -53,7 +53,7 @@ class InstallController extends AbstractController
             $this->malformedRequestError();
         }
 
-        /** @var AvailableOpensourcePluginEntity $plugin */
+        /** @var AvailableOpensourcePluginEntity|null $plugin */
         $plugin = $this->openSourcePluginRepository->search(new Criteria([$requestData['openSourcePluginId']]), $context)
             ->first();
 

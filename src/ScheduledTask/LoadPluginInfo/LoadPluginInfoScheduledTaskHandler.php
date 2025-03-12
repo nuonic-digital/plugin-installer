@@ -33,12 +33,11 @@ class LoadPluginInfoScheduledTaskHandler extends ScheduledTaskHandler
 
     public function run(): void
     {
-
         $lastModified = $this->indexFileService->getLastModifiedAt();
         assert($lastModified instanceof \DateTimeInterface);
 
         $this->cleanupPluginsTask->execute(
-            Context::createDefaultContext(),
+            Context::createCLIContext(),
             $lastModified,
         );
 
