@@ -1,0 +1,20 @@
+{% block sw_search_bar_item_cms_page %}
+    {% parent %}
+
+    {% block nuonic_plugin_installer_search_bar_item_opensource_plugin %}
+        <router-link
+            v-else-if="type === 'nuonic_available_opensource_plugin'"
+            :to="{ name: 'nuonic.plugin.installer.list', params: { id: item.id } }"
+            ref="routerLink"
+            class="sw-search-bar-item__link">
+            {% block nuonic_plugin_installer_search_bar_item_opensource_plugin_label %}
+                <span class="sw-search-bar-item__label">
+                    <sw-highlight-text
+                        :searchTerm="searchTerm"
+                        :text="item.name"
+                    />
+                </span>
+            {% endblock %}
+        </router-link>
+    {% endblock %}
+{% endblock %}

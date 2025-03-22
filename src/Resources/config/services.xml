@@ -116,5 +116,13 @@
         <service id="NuonicPluginInstaller\Action\CleanupPluginsTask">
             <argument type="service" id="nuonic_available_opensource_plugin.repository" />
         </service>
+
+        <service id="NuonicPluginInstaller\ElasticSearch\Admin\Indexer\AvailableOpenSourcePluginAdminSearchIndexer">
+            <argument type="service" id="Doctrine\DBAL\Connection"/>
+            <argument type="service" id="Shopware\Core\Framework\DataAbstractionLayer\Dbal\Common\IteratorFactory" />
+            <argument type="service" id="nuonic_available_opensource_plugin.repository"/>
+            <argument>%elasticsearch.indexing_batch_size%</argument>
+            <tag name="shopware.elastic.admin-searcher-index" key="nuonic_available_opensource_plugin"/>
+        </service>
     </services>
 </container>

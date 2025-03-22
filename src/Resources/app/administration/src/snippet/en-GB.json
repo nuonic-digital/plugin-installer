@@ -1,14 +1,28 @@
 {
+  "global": {
+    "entities": {
+      "nuonic_available_opensource_plugin": "OpenSource Plugins"
+    }
+  },
   "nuonic-plugin-installer": {
     "extension": {
       "title": "OpenSource Plugin Installer",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel diam mi. Quisque consectetur condimentum blandit. Integer nunc nisi, porttitor sed nunc bibendum, vestibulum.",
       "listing": {
-        "placeholderSearchBar": "Search for plugins"
+        "placeholderSearchBar": "Search for plugins..."
       }
     }
   },
   "ce_plugins": {
-    "moduleTitle": "OpenSource Plugin"
+    "moduleTitle": "OpenSource Plugins"
+  },
+  "sw-profile": {
+    "tabSearchPreferences": {
+      "modules": {
+        "nuonic_available_opensource_plugin": {
+          "name": "OpenSource Plugin"
+        }
+      }
+    }
   }
 }

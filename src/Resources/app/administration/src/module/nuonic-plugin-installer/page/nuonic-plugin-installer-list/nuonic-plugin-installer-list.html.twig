@@ -1,21 +1,32 @@
 {% block nuonic_plugin_installer_index %}
-	<sw-meteor-page	hide-icon>
-		<template	#search-bar>
-			{% block sw_extension_my_extensions_index_smart_bar_search_slot_search_bar %}
-				<sw-search-bar	initial-search-type="ce_plugins"	:placeholder="$tc('nuonic-plugin-installer.extension.listing.placeholderSearchBar')"	@search="onSearch" />
+    <sw-meteor-page	hide-icon>
+        <template #search-bar>
+            {% block sw_extension_my_extensions_index_smart_bar_search_slot_search_bar %}
+                <sw-search-bar
+                    initial-search-type="nuonic_available_opensource_plugin"
+                    :placeholder="$tc('nuonic-plugin-installer.extension.listing.placeholderSearchBar')"
+                    @search="onSearch"
+                />
+            {% endblock %}
+        </template>
 
-			{% endblock %}
-		</template>
+        <div class="nuonic-plugin-installer-index">
+            <sw-skeleton
+                v-if="isLoading"
+                :variant="skeletonVariant"
+            />
+            <div v-else	class="nuonic-plugin-installer-index__listing-grid">
+                <template v-for="entry in availablePlugins"	:key="entry.id">
+                    {{ entry.name }}
+                </template>
 
-		<div	class="nuonic-plugin-installer-index">
-			<sw-skeleton	v-if="isLoading"	:variant="skeletonVariant" />
-			<div	v-else	class="nuonic-plugin-installer-index__listing-grid">
-				<template	v-for="entry in availablePlugins"	:key="entry.id">
-					{{ entry.name }}
-				</template>
-
-				<sw-pagination	:total="total"	:limit="limit"	:page="page"	@page-change="changePage" />
-			</div>
-		</div>
-	</sw-meteor-page>
+                <sw-pagination
+                    :total="total"
+                    :limit="limit"
+                    :page="page"
+                    @page-change="changePage"
+                />
+            </div>
+        </div>
+    </sw-meteor-page>
 {% endblock %}
