@@ -11,9 +11,6 @@ services:
       - web
     environment:
       - XDEBUG_ENABLED=1
-      - PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
-      - SHOPWARE_ADMIN_BUILD_ONLY_EXTENSIONS=1
-      - DISABLE_ADMIN_COMPILATION_TYPECHECK=1
 networks:
   web:
     name: web

@@ -1,32 +1,21 @@
 {% block nuonic_plugin_installer_index %}
-    <sw-meteor-page	hide-icon>
+    <sw-page hide-icon>
         <template #search-bar>
-            {% block sw_extension_my_extensions_index_smart_bar_search_slot_search_bar %}
-                <sw-search-bar
-                    initial-search-type="nuonic_available_opensource_plugin"
-                    :placeholder="$tc('nuonic-plugin-installer.extension.listing.placeholderSearchBar')"
-                    @search="onSearch"
-                />
-            {% endblock %}
+            <sw-search-bar initial-search-type="nuonic_available_opensource_plugin" :placeholder="$tc('nuonic-plugin-installer.extension.listing.placeholderSearchBar')" @search="onSearch" />
         </template>
-
-        <div class="nuonic-plugin-installer-index">
-            <sw-skeleton
-                v-if="isLoading"
-                :variant="skeletonVariant"
-            />
-            <div v-else	class="nuonic-plugin-installer-index__listing-grid">
-                <template v-for="entry in availablePlugins"	:key="entry.id">
-                    {{ entry.name }}
-                </template>
-
-                <sw-pagination
-                    :total="total"
-                    :limit="limit"
-                    :page="page"
-                    @page-change="changePage"
-                />
+        <template #smart-bar-header>
+            {{ $tc('sw-extension.mainMenu.purchased') }}
+        </template>
+        <template #content>
+            <div class="nuonic-plugin-installer-index">
+                <sw-skeleton v-if="isLoading" :variant="skeletonVariant" />
+                <div v-else class="nuonic-plugin-installer-index__listing-grid">
+                    <template v-for="entry in availablePlugins" :key="entry.id">
+                        <component :is="'nuonic-extension-card'" :extension="entry" />
+                    </template>
+                    <sw-pagination :total="total" :limit="limit" :page="page" @page-change="changePage" />
+                </div>
             </div>
-        </div>
-    </sw-meteor-page>
+        </template>
+    </sw-page>
 {% endblock %}

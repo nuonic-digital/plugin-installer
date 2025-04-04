@@ -1,0 +1,46 @@
+<sw-meteor-card	class="nuonic-extension-card-base">
+	<sw-loader	v-if="isLoading" />
+
+	<sw-extension-icon	:src="imageUrl" />
+
+	{% block nuonic_extension_card_base_activation_switch %}
+		<div	class="nuonic-extension-card-base__info">
+			<section>
+				<span	class="nuonic-extension-card-base__info-name">
+					{{ extension.name }}
+				</span>
+				<br/>
+				<span	class="nuonic-extension-card-base__info-description">
+					{{ extension.description }}
+				</span>
+
+			</section>
+		</div>
+	{% endblock %}
+
+	<div	class="nuonic-extension-card-base__meta-info">
+		{% block nuonic_extension_card_base_info_content %}
+			<section>
+				<span	v-if="extension.availableVersion"	class="nuonic-extension-card-base__meta-info-version">
+					Version (TODO):
+					{{ extension.availableVersion }}
+				</span>
+				<br/>
+				<span	v-if="extension.lastCommitTime"	class="nuonic-extension-card-base__meta-info-last-commit">
+					Last Commit (TODO):
+					{{ dateFilter(extension.lastCommitTime, { month: 'numeric', year: 'numeric', hour: undefined, minute: undefined }) }}
+
+				</span>
+
+			</section>
+		{% endblock %}
+
+	</div>
+
+	<div	class="nuonic-extension-card-base__main-action">
+		<span	v-if="!isInstalled"	class="nuonic-extension-card-base__open-extension"	role="button"	tabindex="0">
+			Install (TODO)
+		</span>
+	</div>
+
+</sw-meteor-card>
