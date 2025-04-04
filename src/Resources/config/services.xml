@@ -74,10 +74,6 @@
             <argument type="service" id="NuonicPluginInstaller\Action\LoadPluginAction" />
             <tag name="messenger.message_handler" />
         </service>
-        <service id="NuonicPluginInstaller\Command\TestPluginLoaderAction">
-            <argument type="service" id="NuonicPluginInstaller\Action\LoadPluginAction" />
-            <tag name="console.command" />
-        </service>
 
         <service id="NuonicPluginInstaller\Service\PackageService">
             <argument type="service" id="Shopware\Core\Framework\Plugin\Composer\CommandExecutor" />
