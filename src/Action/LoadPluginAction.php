@@ -56,17 +56,17 @@ readonly class LoadPluginAction
             return;
         }
 
-        $githubUrl = \str_replace('.git', '', $version['source']['url']);
-        $githubUrl = \str_replace('https://github.com/', 'https://raw.githubusercontent.com/', $githubUrl.'/refs/heads/main/');
+        $githubUrl = str_replace('.git', '', $version['source']['url']);
+        $githubUrl = str_replace('//refs', '/refs', str_replace('https://github.com/', 'https://raw.githubusercontent.com/', $githubUrl.'/refs/heads/main/'));
         $mainExtensionYmlUrl = $githubUrl.'.shopware-extension.yml';
 
         $pluginData = [
             'icon' => $version['extra']['plugin-icon'] ?? $githubUrl . '/src/Resources/config/plugin.png',
-            ...$packageInformation->additionalMetadataExists ? $this->fetchExtensionYmlData($mainExtensionYmlUrl, $githubUrl): [],
+            ...$packageInformation->additionalMetadataExists ? $this->fetchExtensionYmlData($mainExtensionYmlUrl, $githubUrl) : [],
             'packageName' => $packageInformation->packageName,
             'manufacturer' => implode(', ', array_column($version['authors'], 'name')),
             'manufacturerLink' => array_values($version['extra']['manufacturerLink'] ?? ['https://github.com'])[0], // get first translation - TODO: fix
-            'license' => $version['license'][0],
+            'license' => $version['license'][0] ?? 'UNKNOWN',
             'link' => $repositoryUrl,
             'availableVersion' => $version['version'],
         ];
@@ -76,11 +76,15 @@ readonly class LoadPluginAction
         }
 
         if (!isset($pluginData['description']['en-GB'])) {
-            $pluginData['description']['en-GB'] = $version['extra']['description']['en-GB'] ?? $packageInformation->packageName;
+            $pluginData['description']['en-GB'] = !empty($version['extra']['description']['en-GB'])
+                ? $version['extra']['description']['en-GB']
+                : $packageInformation->packageName;
         }
 
         if (!isset($pluginData['description']['de-DE'])) {
-            $pluginData['description']['de-DE'] = $version['extra']['description']['de-DE'] ?? $packageInformation->packageName;
+            $pluginData['description']['de-DE'] = !empty($version['extra']['description']['de-DE'])
+                ? $version['extra']['description']['de-DE']
+                : $packageInformation->packageName;
         }
 
         $pluginData['name']['de-DE'] = $version['extra']['label']['de-DE'] ?? $packageInformation->packageName;
@@ -125,14 +129,22 @@ readonly class LoadPluginAction
             if (isset($extensionYmlData['store']['icon'])) {
                 $pluginData['icon'] = $githubUrl . '/' . $extensionYmlData['store']['icon'];
             }
-            foreach ($extensionYmlData['store']['images'] as $images) {
-                $pluginData['images'][] = $githubUrl . '/' . $images['file'];
+            if (isset($extensionYmlData['store']['images'])) {
+                foreach ($extensionYmlData['store']['images'] as $images) {
+                    $pluginData['images'][] = $githubUrl . '/' . $images['file'];
+                }
             }
             if (isset($extensionYmlData['store']['description']['en'])) {
-                $pluginData['description']['en-GB'] = $extensionYmlData['store']['description']['en'];
+                $pluginData['description']['en-GB'] = $this->processFileUrls(
+                    $extensionYmlData['store']['description']['en'],
+                    $githubUrl
+                );
             }
             if (isset($extensionYmlData['store']['description']['de'])) {
-                $pluginData['description']['de-DE'] = $extensionYmlData['store']['description']['de'];
+                $pluginData['description']['de-DE'] = $this->processFileUrls(
+                    $extensionYmlData['store']['description']['de'],
+                    $githubUrl
+                );
             }
 
             // TODO Load from markdown files
@@ -141,6 +153,15 @@ readonly class LoadPluginAction
         }
 
         return $pluginData;
+    }
+
+    private function processFileUrls(string $data, string $githubUrl): string
+    {
+        if (str_starts_with($data, 'file:')) {
+            return $githubUrl . '/' . substr($data, 5);
+        }
+
+        return $data;
     }
 
     private function findSuitableVersion(array $packagistData): ?array
