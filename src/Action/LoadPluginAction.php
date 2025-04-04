@@ -175,6 +175,9 @@ readonly class LoadPluginAction
             }
 
             if ($this->checkVersionConstraint($versionData['require']['shopware/core'], $this->shopwareVersion)) {
+                if (isset($versionData['require']['php']) && !$this->checkVersionConstraint($versionData['require']['php'], PHP_VERSION)) {
+                    continue;
+                }
                 return $versionData;
             }
         }
