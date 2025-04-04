@@ -19,6 +19,6 @@ class Migration1741375493AddPackageName extends MigrationStep
 
     public function update(Connection $connection): void
     {
-        $connection->executeStatement('ALTER TABLE `nuonic_available_opensource_plugin` ADD COLUMN `package_name` VARCHAR(255) NULL AFTER `description`');
+        $connection->executeStatement('ALTER TABLE `nuonic_available_opensource_plugin` ADD COLUMN `package_name` VARCHAR(255) NULL AFTER `id`');
     }
 }
