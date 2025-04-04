@@ -41,7 +41,7 @@ readonly class LoadPluginAction
             $packageInformation = $this->indexFileService->getPackageInformation($packageInformation);
         }
 
-        if (null === $packageInformation) {
+        if (is_null($packageInformation)) {
             return;
         }
 
@@ -52,7 +52,7 @@ readonly class LoadPluginAction
 
         $version = $this->findSuitableVersion($packagistData);
 
-        if (null === $version) {
+        if (is_null($version)) {
             return;
         }
 
@@ -60,18 +60,9 @@ readonly class LoadPluginAction
         $githubUrl = \str_replace('https://github.com/', 'https://raw.githubusercontent.com/', $githubUrl.'/refs/heads/main/');
         $mainExtensionYmlUrl = $githubUrl.'.shopware-extension.yml';
 
-        $extensionYmlUrl = null;
-
-        $isComposer = false;
-
-        $mainExtensionYmlResponse = $this->httpClient->request('GET', $mainExtensionYmlUrl);
-        if (200 === $mainExtensionYmlResponse->getStatusCode()) {
-            $extensionYmlUrl = $mainExtensionYmlUrl;
-        } else {
-            $isComposer = true;
-        }
-
         $pluginData = [
+            'icon' => $version['extra']['plugin-icon'] ?? $githubUrl . '/src/Resources/config/plugin.png',
+            ...$packageInformation->additionalMetadataExists ? $this->fetchExtensionYmlData($mainExtensionYmlUrl, $githubUrl): [],
             'packageName' => $packageInformation->packageName,
             'manufacturer' => implode(', ', array_column($version['authors'], 'name')),
             'manufacturerLink' => array_values($version['extra']['manufacturerLink'] ?? ['https://github.com'])[0], // get first translation - TODO: fix
@@ -84,38 +75,11 @@ readonly class LoadPluginAction
             $pluginData['manufacturer'] = 'UNKNOWN';
         }
 
-        if (!$isComposer) {
-            $extensionYmlResponse = $this->httpClient->request('GET', $extensionYmlUrl);
-            if (200 === $extensionYmlResponse->getStatusCode()) {
-                $extensionYmlData = Yaml::parse($extensionYmlResponse->getContent());
-                if (isset($extensionYmlData['store'])) {
-                    if (isset($extensionYmlData['store']['icon'])) {
-                        $pluginData['icon'] = $githubUrl.'/'.$extensionYmlData['store']['icon'];
-                    } else {
-                        $pluginData['icon'] = $githubUrl.'/src/Resources/config/plugin.png';
-                    }
-                    foreach ($extensionYmlData['store']['images'] as $images) {
-                        $pluginData['images'][] = $githubUrl.'/'.$images['file'];
-                    }
-                    if (isset($extensionYmlData['store']['description']['en'])) {
-                        $pluginData['description']['en-GB'] = $extensionYmlData['store']['description']['en'];
-                    }
-                    if (isset($extensionYmlData['store']['description']['de'])) {
-                        $pluginData['description']['de-DE'] = $extensionYmlData['store']['description']['de'];
-                    }
-
-                // TODO Load from markdown files
-
-                // TODO load images from folder
-                } else {
-                    $pluginData['icon'] = $githubUrl.'/src/Resources/config/plugin.png';
-                    $isComposer = true;
-                }
-            }
+        if (!isset($pluginData['description']['en-GB'])) {
+            $pluginData['description']['en-GB'] = $version['extra']['description']['en-GB'] ?? $packageInformation->packageName;
         }
 
-        if ($isComposer) {
-            $pluginData['description']['en-GB'] = $version['extra']['description']['en-GB'] ?? $packageInformation->packageName;
+        if (!isset($pluginData['description']['de-DE'])) {
             $pluginData['description']['de-DE'] = $version['extra']['description']['de-DE'] ?? $packageInformation->packageName;
         }
 
@@ -145,6 +109,38 @@ readonly class LoadPluginAction
         $pluginData['lastCommitTime'] = $packageInformation->latestCommitTime;
 
         $this->availableOpensourcePluginRepository->upsert([$pluginData], Context::createDefaultContext());
+    }
+
+    private function fetchExtensionYmlData(string $mainExtensionYmlUrl, string $githubUrl): array
+    {
+        $extensionYmlResponse = $this->httpClient->request('GET', $mainExtensionYmlUrl);
+        if (200 !== $extensionYmlResponse->getStatusCode()) {
+            return [];
+        }
+
+        $extensionYmlData = Yaml::parse($extensionYmlResponse->getContent());
+
+        $pluginData = [];
+        if (isset($extensionYmlData['store'])) {
+            if (isset($extensionYmlData['store']['icon'])) {
+                $pluginData['icon'] = $githubUrl . '/' . $extensionYmlData['store']['icon'];
+            }
+            foreach ($extensionYmlData['store']['images'] as $images) {
+                $pluginData['images'][] = $githubUrl . '/' . $images['file'];
+            }
+            if (isset($extensionYmlData['store']['description']['en'])) {
+                $pluginData['description']['en-GB'] = $extensionYmlData['store']['description']['en'];
+            }
+            if (isset($extensionYmlData['store']['description']['de'])) {
+                $pluginData['description']['de-DE'] = $extensionYmlData['store']['description']['de'];
+            }
+
+            // TODO Load from markdown files
+
+            // TODO load images from folder
+        }
+
+        return $pluginData;
     }
 
     private function findSuitableVersion(array $packagistData): ?array

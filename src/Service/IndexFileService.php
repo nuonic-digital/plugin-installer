@@ -93,6 +93,7 @@ class IndexFileService implements IndexFileServiceInterface
                 packageName: $package,
                 repositoryUrl: $packageInfo['repositoryUrl'],
                 ref: $packageInfo['ref'],
+                additionalMetadataExists: $packageInfo['additionalMetadataExists'] ?? false,
                 latestCommitTime: new \DateTime('@'.$packageInfo['latestCommitTime']),
             );
         }
