@@ -61,7 +61,9 @@ readonly class LoadPluginAction
         $mainExtensionYmlUrl = $githubUrl.'.shopware-extension.yml';
 
         $pluginData = [
-            'icon' => $githubUrl .'/'. ($version['extra']['plugin-icon'] ?? 'src/Resources/config/plugin.png'),
+            'icon' => $this->checkIconUrl(
+                $githubUrl .'/'. ($version['extra']['plugin-icon'] ?? 'src/Resources/config/plugin.png')
+            ),
             ...$packageInformation->additionalMetadataExists ? $this->fetchExtensionYmlData($mainExtensionYmlUrl, $githubUrl) : [],
             'packageName' => $packageInformation->packageName,
             'manufacturer' => implode(', ', array_column($version['authors'], 'name')),
@@ -147,6 +149,13 @@ readonly class LoadPluginAction
         }
 
         return $pluginData;
+    }
+
+    private function checkIconUrl(string $iconUrl): ?string
+    {
+        $response = $this->httpClient->request('GET', $iconUrl);
+
+        return 200 === $response->getStatusCode() && strlen($response->getContent()) > 10 ? $iconUrl : null;
     }
 
     private function findSuitableVersion(array $packagistData): ?array

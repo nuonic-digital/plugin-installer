@@ -4,7 +4,7 @@
     {% block nuonic_plugin_installer_search_bar_item_opensource_plugin %}
         <router-link
             v-else-if="type === 'nuonic_available_opensource_plugin'"
-            :to="{ name: 'nuonic.plugin.installer.list', params: { id: item.id } }"
+            :to="{ name: 'nuonic.plugin.installer.list', query: { term: item.packageName } }"
             ref="routerLink"
             class="sw-search-bar-item__link">
             {% block nuonic_plugin_installer_search_bar_item_opensource_plugin_label %}

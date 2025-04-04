@@ -51,7 +51,7 @@ class MediaProxyController extends AbstractController
             return $this->malformedRequestError();
         }
 
-        $response = $this->cache->get($url, function (ItemInterface $item) use ($url): array {
+        $response = $this->cache->get(md5($url), function (ItemInterface $item) use ($url): array {
             $response = $this->client->request('GET', $url);
             $statusCode = $response->getStatusCode();
 
