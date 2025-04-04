@@ -134,34 +134,19 @@ readonly class LoadPluginAction
                     $pluginData['images'][] = $githubUrl . '/' . $images['file'];
                 }
             }
-            if (isset($extensionYmlData['store']['description']['en'])) {
-                $pluginData['description']['en-GB'] = $this->processFileUrls(
-                    $extensionYmlData['store']['description']['en'],
-                    $githubUrl
-                );
+            if (isset($extensionYmlData['store']['description']['en'])
+                && !str_starts_with($extensionYmlData['store']['description']['en'], 'file:')
+            ) {
+                $pluginData['description']['en-GB'] = $extensionYmlData['store']['description']['en'];
             }
-            if (isset($extensionYmlData['store']['description']['de'])) {
-                $pluginData['description']['de-DE'] = $this->processFileUrls(
-                    $extensionYmlData['store']['description']['de'],
-                    $githubUrl
-                );
+            if (isset($extensionYmlData['store']['description']['de'])
+                && !str_starts_with($extensionYmlData['store']['description']['de'], 'file:')
+            ) {
+                $pluginData['description']['de-DE'] = $extensionYmlData['store']['description']['de'];
             }
-
-            // TODO Load from markdown files
-
-            // TODO load images from folder
         }
 
         return $pluginData;
-    }
-
-    private function processFileUrls(string $data, string $githubUrl): string
-    {
-        if (str_starts_with($data, 'file:')) {
-            return $githubUrl . '/' . substr($data, 5);
-        }
-
-        return $data;
     }
 
     private function findSuitableVersion(array $packagistData): ?array
