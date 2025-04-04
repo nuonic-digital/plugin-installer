@@ -4,7 +4,9 @@
             <sw-search-bar initial-search-type="nuonic_available_opensource_plugin" :placeholder="$tc('nuonic-plugin-installer.extension.listing.placeholderSearchBar')" @search="onSearch" />
         </template>
         <template #smart-bar-header>
-            {{ $tc('sw-extension.mainMenu.purchased') }}
+            <h2>
+                {{ $tc('nuonic-plugin-installer.list.title') }}
+            </h2>
         </template>
         <template #content>
             <div class="nuonic-plugin-installer-index">

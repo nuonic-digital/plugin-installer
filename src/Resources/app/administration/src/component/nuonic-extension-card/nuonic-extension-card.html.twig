@@ -3,43 +3,53 @@
 
 	<sw-extension-icon	:src="imageUrl" />
 
-	{% block nuonic_extension_card_base_activation_switch %}
-		<div	class="nuonic-extension-card-base__info">
-			<section>
-				<span	class="nuonic-extension-card-base__info-name">
-					{{ extension.name }}
-				</span>
-				<br/>
-				<span	class="nuonic-extension-card-base__info-description">
-					{{ extension.description }}
-				</span>
+	<div	class="nuonic-extension-card-base__info">
+		<section>
+			<span	class="nuonic-extension-card-base__info-name">
+				{{ extension.name }}
+			</span>
+			<br/>
+			<span	class="nuonic-extension-card-base__info-description">
+				{{ extension.description }}
+			</span>
+			<br/>
+			<span	v-if="extension.manufacturer"	class="nuonic-extension-card-base__info-manufacturer">
+				{{ $tc('nuonic-plugin-installer.cards.manufacturer') }}
+				{{ extension.manufacturer }}
+			</span>
+			|
+			<span	v-if="extension.license"	class="nuonic-extension-card-base__info-license">
+				{{ $tc('nuonic-plugin-installer.cards.license') }}
+				{{ extension.license }}
+			</span>
+		</section>
+	</div>
 
-			</section>
-		</div>
-	{% endblock %}
+	<div	class="nuonic-extension-card-base__main-link">
+		<a	:href="extension.link"	target="_blank"	rel="noopener noreferrer">
+			<sw-icon	name="regular-github"></sw-icon>
+		</a>
+	</div>
 
 	<div	class="nuonic-extension-card-base__meta-info">
-		{% block nuonic_extension_card_base_info_content %}
-			<section>
-				<span	v-if="extension.availableVersion"	class="nuonic-extension-card-base__meta-info-version">
-					Version (TODO):
-					{{ extension.availableVersion }}
-				</span>
-				<br/>
-				<span	v-if="extension.lastCommitTime"	class="nuonic-extension-card-base__meta-info-last-commit">
-					Last Commit (TODO):
-					{{ dateFilter(extension.lastCommitTime, { month: 'numeric', year: 'numeric', hour: undefined, minute: undefined }) }}
+		<section>
+			<span	v-if="extension.availableVersion"	class="nuonic-extension-card-base__meta-info-version">
+				{{ $tc('nuonic-plugin-installer.cards.version') }}
+				{{ extension.availableVersion }}
+			</span>
+			<br/>
+			<span	v-if="extension.lastCommitTime"	class="nuonic-extension-card-base__meta-info-last-commit">
+				{{ $tc('nuonic-plugin-installer.cards.lastCommit') }}
+				{{ dateFilter(extension.lastCommitTime, { month: 'numeric', year: 'numeric', hour: undefined, minute: undefined }) }}
+			</span>
 
-				</span>
-
-			</section>
-		{% endblock %}
+		</section>
 
 	</div>
 
 	<div	class="nuonic-extension-card-base__main-action">
-		<span	v-if="!isInstalled"	class="nuonic-extension-card-base__open-extension"	role="button"	tabindex="0">
-			Install (TODO)
+		<span	v-if="!isInstalled"	class="nuonic-extension-card-base__open-extension"	role="button"	tabindex="0"	@click="onInstall">
+			{{ $tc('nuonic-plugin-installer.cards.install') }}
 		</span>
 	</div>
 

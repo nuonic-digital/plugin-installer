@@ -8,15 +8,11 @@ const { Utils, Filter } = Shopware;
 Component.register('nuonic-extension-card', {
 	template,
 
-	compatConfig: Shopware.compatConfig,
+	inject: ['installExtensionService'],
 
-	inheritAttrs: false,
-
-	inject: ['shopwareExtensionService', 'extensionStoreActionService', 'cacheApiService'],
+	mixins: [Mixin.getByName('notification')],
 
 	emits: ['update-list'],
-
-	mixins: ['sw-extension-error'],
 
 	props: {
 		extension: {
@@ -28,15 +24,6 @@ Component.register('nuonic-extension-card', {
 	data() {
 		return {
 			isLoading: false,
-			showUninstallModal: false,
-			showRemovalModal: false,
-			showPermissionsModal: false,
-			permissionsAccepted: false,
-			showPrivacyModal: false,
-			permissionModalActionLabel: null,
-			openLink: null,
-			showConsentAffirmationModal: false,
-			consentAffirmationDeltas: null,
 		};
 	},
 
@@ -68,8 +55,6 @@ Component.register('nuonic-extension-card', {
 		isInstalled() {
 			const installed = this.extension.pluginId !== null;
 
-			console.log('isInstalled', installed);
-
 			return installed;
 		},
 
@@ -81,6 +66,28 @@ Component.register('nuonic-extension-card', {
 	methods: {
 		emitUpdateList() {
 			this.$emit('update-list');
+		},
+
+		onInstall() {
+			this.isLoading = true;
+
+			const data = {
+				openSourcePluginId: this.extension.id,
+			};
+
+			this.installExtensionService
+				.install(data)
+				.then(() => {
+					this.isLoading = false;
+					this.$router.push({ name: 'sw.extension.my-extensions.listing.app', query: { term: this.extension.name } });
+				})
+				.catch((error) => {
+					this.isLoading = false;
+					this.createNotificationError({
+						message: this.$tc('nuonic-plugin-installer.notification.installFailed'),
+						error,
+					});
+				});
 		},
 	},
 });

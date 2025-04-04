@@ -11,6 +11,19 @@
       "listing": {
         "placeholderSearchBar": "Search for plugins..."
       }
+    },
+    "list": {
+      "title": "OpenSource Plugin Installer"
+    },
+    "cards": {
+      "version": "Version:",
+      "install": "Install",
+      "lastCommit": "Last commit on:",
+      "license": "License:",
+      "manufacturer": "Manufacturer:"
+    },
+    "notification": {
+      "installFailed": "Installation failed"
     }
   },
   "ce_plugins": {
