@@ -50,14 +50,4 @@ class NuonicPluginInstaller extends Plugin
         $connection->executeStatement('DROP TABLE IF EXISTS nuonic_available_opensource_plugin_translation');
         $connection->executeStatement('DROP TABLE IF EXISTS nuonic_available_opensource_plugin');
     }
-
-    public function postInstall(InstallContext $installContext): void
-    {
-        $this->container->get(RefreshAction::class)->execute($installContext->getContext());
-    }
-
-    public function postUpdate(UpdateContext $updateContext): void
-    {
-        $this->container->get(RefreshAction::class)->execute($updateContext->getContext());
-    }
 }
