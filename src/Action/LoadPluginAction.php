@@ -61,7 +61,7 @@ readonly class LoadPluginAction
         $mainExtensionYmlUrl = $githubUrl.'.shopware-extension.yml';
 
         $pluginData = [
-            'icon' => $version['extra']['plugin-icon'] ?? $githubUrl . '/src/Resources/config/plugin.png',
+            'icon' => $githubUrl .'/'. ($version['extra']['plugin-icon'] ?? 'src/Resources/config/plugin.png'),
             ...$packageInformation->additionalMetadataExists ? $this->fetchExtensionYmlData($mainExtensionYmlUrl, $githubUrl) : [],
             'packageName' => $packageInformation->packageName,
             'manufacturer' => implode(', ', array_column($version['authors'], 'name')),
