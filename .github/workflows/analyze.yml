@@ -25,3 +25,19 @@ jobs:
 
       - name: 🪮 Check code style
         run: composer style-check
+
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version-selection: [ 'highest', 'lowest' ]
+    steps:
+      - name: ⬇️ Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🪮 Check extension
+        uses: shopware/github-actions/extension-verifier@main
+        with:
+          action: check
+          check-against: ${{ matrix.version-selection }}
