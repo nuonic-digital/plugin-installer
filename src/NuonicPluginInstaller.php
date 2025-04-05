@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace NuonicPluginInstaller;
 
 use Doctrine\DBAL\Connection;
-use NuonicPluginInstaller\Action\RefreshAction;
 use Shopware\Core\Framework\Plugin;
-use Shopware\Core\Framework\Plugin\Context\InstallContext;
 use Shopware\Core\Framework\Plugin\Context\UninstallContext;
-use Shopware\Core\Framework\Plugin\Context\UpdateContext;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\DelegatingLoader;
 use Symfony\Component\Config\Loader\LoaderResolver;

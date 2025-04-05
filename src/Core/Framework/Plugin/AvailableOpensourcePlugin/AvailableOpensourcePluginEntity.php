@@ -112,7 +112,6 @@ class AvailableOpensourcePluginEntity extends Entity
 
     /**
      * @param MediaEntity[]|null $images
-     * @return void
      */
     public function setImages(?array $images): void
     {

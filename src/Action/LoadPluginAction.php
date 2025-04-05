@@ -62,7 +62,7 @@ readonly class LoadPluginAction
 
         $pluginData = [
             'icon' => $this->checkIconUrl(
-                $githubUrl .'/'. ($version['extra']['plugin-icon'] ?? 'src/Resources/config/plugin.png')
+                $githubUrl.'/'.($version['extra']['plugin-icon'] ?? 'src/Resources/config/plugin.png')
             ),
             ...$packageInformation->additionalMetadataExists ? $this->fetchExtensionYmlData($mainExtensionYmlUrl, $githubUrl) : [],
             'packageName' => $packageInformation->packageName,
@@ -129,11 +129,11 @@ readonly class LoadPluginAction
         $pluginData = [];
         if (isset($extensionYmlData['store'])) {
             if (isset($extensionYmlData['store']['icon'])) {
-                $pluginData['icon'] = $githubUrl . '/' . $extensionYmlData['store']['icon'];
+                $pluginData['icon'] = $githubUrl.'/'.$extensionYmlData['store']['icon'];
             }
             if (isset($extensionYmlData['store']['images'])) {
                 foreach ($extensionYmlData['store']['images'] as $images) {
-                    $pluginData['images'][] = $githubUrl . '/' . $images['file'];
+                    $pluginData['images'][] = $githubUrl.'/'.$images['file'];
                 }
             }
             if (isset($extensionYmlData['store']['description']['en'])
@@ -178,6 +178,7 @@ readonly class LoadPluginAction
                 if (isset($versionData['require']['php']) && !$this->checkVersionConstraint($versionData['require']['php'], PHP_VERSION)) {
                     continue;
                 }
+
                 return $versionData;
             }
         }

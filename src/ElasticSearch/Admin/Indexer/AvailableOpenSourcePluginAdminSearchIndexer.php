@@ -21,12 +21,11 @@ use Shopware\Elasticsearch\Admin\Indexer\AbstractAdminIndexer;
 
 class AvailableOpenSourcePluginAdminSearchIndexer extends AbstractAdminIndexer
 {
-
     public function __construct(
         private readonly Connection $connection,
         private readonly IteratorFactory $factory,
         private readonly EntityRepository $repository,
-        private readonly int $indexingBatchSize
+        private readonly int $indexingBatchSize,
     ) {
     }
 
@@ -86,7 +85,7 @@ class AvailableOpenSourcePluginAdminSearchIndexer extends AbstractAdminIndexer
             $mapped[$id] = [
                 'id' => $id,
                 'textBoosted' => \strtolower($textBoosted),
-                'text' => \strtolower($text)
+                'text' => \strtolower($text),
             ];
         }
 
