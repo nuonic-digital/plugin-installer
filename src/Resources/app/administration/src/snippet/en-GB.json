@@ -23,8 +23,10 @@
       "version": "Version:",
       "install": "Install",
       "lastCommit": "Last commit on:",
+      "installedAt": "Installed on:",
       "license": "License:",
-      "manufacturer": "Manufacturer:"
+      "manufacturer": "Manufacturer:",
+      "update": "Update"
     },
     "notification": {
       "installFailed": "Installation failed"

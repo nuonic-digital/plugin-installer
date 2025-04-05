@@ -70,6 +70,10 @@
 		&:hover {
 			color: $color-shopware-brand-800;
 		}
+
+		&.as-info {
+			cursor: default;
+		}
 	}
 }
 
