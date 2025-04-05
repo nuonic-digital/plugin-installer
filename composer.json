@@ -34,8 +34,8 @@
     "author": "nuonic Digital GmbH & Co. KG",
     "shopware-plugin-class": "NuonicPluginInstaller\\NuonicPluginInstaller",
     "label": {
-      "de-DE": "Open source plugin installer",
-      "en-GB": "Open source plugin installer"
+      "de-DE": "OpenSource Plugin Installer",
+      "en-GB": "OpenSource Plugin Installer"
     },
     "description": {
       "de-DE": "Ermöglicht die Installation aller Open-Source-Plugins von Packagist, stellt Metadaten für jedes Plugin zur Verfügung und gewährleistet kontinuierliche Updates durch Packagist.",
