@@ -23,8 +23,10 @@
       "version": "Version:",
       "install": "Installieren",
       "lastCommit": "Letzter Commit am:",
+      "installedAt": "Installiert am:",
       "license": "Lizenz:",
-      "manufacturer": "Hersteller:"
+      "manufacturer": "Hersteller:",
+      "update": "Aktualisieren"
     },
     "notification": {
       "installFailed": "Installation fehlgeschlagen"
