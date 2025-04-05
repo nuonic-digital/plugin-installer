@@ -1,9 +1,0 @@
-parameters:
-    level: 6
-    paths:
-        - src
-    scanDirectories:
-        - ../../../vendor
-
-includes:
-    - vendor/shopwarelabs/phpstan-shopware/rules.neon
