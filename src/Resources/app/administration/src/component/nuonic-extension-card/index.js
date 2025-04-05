@@ -1,9 +1,7 @@
 import template from './nuonic-extension-card.html.twig';
 import './nuonic-extension-card.scss';
 
-const { Component, Mixin } = Shopware;
-const { Criteria } = Shopware.Data;
-const { Utils, Filter } = Shopware;
+const { Component, Mixin, Filter } = Shopware;
 
 Component.register('nuonic-extension-card', {
 	template,
