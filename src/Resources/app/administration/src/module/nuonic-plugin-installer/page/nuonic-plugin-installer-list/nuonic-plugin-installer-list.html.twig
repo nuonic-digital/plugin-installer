@@ -12,10 +12,15 @@
             <div class="nuonic-plugin-installer-index">
                 <sw-skeleton v-if="isLoading" :variant="skeletonVariant" />
                 <div v-else class="nuonic-plugin-installer-index__listing-grid">
-                    <template v-for="entry in availablePlugins" :key="entry.id">
-                        <component :is="'nuonic-extension-card'" :extension="entry" />
+                    <template v-if="total > 0">
+                        <template v-for="entry in availablePlugins" :key="entry.id">
+                            <component :is="'nuonic-extension-card'" :extension="entry" />
+                        </template>
+                        <sw-pagination :total="total" :limit="limit" :page="page" @page-change="changePage" />
                     </template>
-                    <sw-pagination :total="total" :limit="limit" :page="page" @page-change="changePage" />
+                    <template v-else>
+                        <sw-empty-state :title="$tc('nuonic-plugin-installer.list.emptyState.title')" :subline="$tc('nuonic-plugin-installer.list.emptyState.subline')" :icon="'regular-exclamation-triangle'" color="#ff8f00" class="nuonic-plugin-installer-index__empty-state" />
+                    </template>
                 </div>
             </div>
         </template>

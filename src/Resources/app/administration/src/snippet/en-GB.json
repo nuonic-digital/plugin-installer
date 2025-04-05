@@ -13,7 +13,11 @@
       }
     },
     "list": {
-      "title": "OpenSource Plugin Installer"
+      "title": "OpenSource Plugin Installer",
+      "emptyState": {
+        "title": "No plugins found",
+        "subline": "Please check if the scheduled tasks are running correctly and a correct plugin list is set in the plugin configuration."
+      }
     },
     "cards": {
       "version": "Version:",
