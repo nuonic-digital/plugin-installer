@@ -1,6 +1,6 @@
 {
   "name": "nuonic/plugin-installer",
-  "description": "Shopware 6 plugin installer based on composer + metadata from GitHub",
+  "description": "Allows installing all open-source plugins from Packagist, providing metadata for each, and ensures continuous updates through Packagist for streamlined maintenance.",
   "type": "shopware-platform-plugin",
   "version": "1.0.0",
   "license": "MIT",
@@ -38,8 +38,8 @@
       "en-GB": "Open source plugin installer"
     },
     "description": {
-      "de-DE": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel diam mi. Quisque consectetur condimentum blandit. Integer nunc nisi, porttitor sed nunc bibendum, vestibulum.",
-      "en-GB": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel diam mi. Quisque consectetur condimentum blandit. Integer nunc nisi, porttitor sed nunc bibendum, vestibulum."
+      "de-DE": "Ermöglicht die Installation aller Open-Source-Plugins von Packagist, stellt Metadaten für jedes Plugin zur Verfügung und gewährleistet kontinuierliche Updates durch Packagist.",
+      "en-GB": "Allows installing all open-source plugins from Packagist, providing metadata for each, and ensures continuous updates through Packagist for streamlined maintenance."
     },
     "manufacturerLink": {
       "de-DE": "https://nuonic.de",
