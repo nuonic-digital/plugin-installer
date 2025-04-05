@@ -13,7 +13,11 @@
       }
     },
     "list": {
-      "title": "OpenSource Plugin Installer"
+      "title": "OpenSource Plugin Installer",
+      "emptyState": {
+        "title": "Keine Plugins gefunden",
+        "subline": "Überprüfe, ob die geplanten Aufgaben korrekt ausgeführt werden und dass eine korrekte Plugin-Liste in der Plugin-Konfiguration eingestellt ist."
+      }
     },
     "cards": {
       "version": "Version:",

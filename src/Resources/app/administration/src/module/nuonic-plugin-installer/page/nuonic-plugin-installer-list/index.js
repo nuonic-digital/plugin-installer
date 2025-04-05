@@ -32,7 +32,7 @@ Component.register('nuonic-plugin-installer-list', {
 			criteria.setTerm(this.term);
 			criteria.addSorting(Criteria.sort(this.sortBy, this.sortDirection));
 			criteria.addAssociation('plugin');
-			criteria.addFilter(Criteria.range('lastSeenAt', { gte: new Date(Date.now() - 48 * 60 * 60 * 1000) }));
+			criteria.addFilter(Criteria.range('lastSeenAt', { lte: new Date(Date.now() - 48 * 60 * 60 * 1000) }));
 			return criteria;
 		},
 	},
