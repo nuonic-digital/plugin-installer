@@ -1,4 +1,5 @@
 # Open Source Shopware Plugin Installer
+[![Latest Stable Version](http://poser.pugx.org/nuonic/plugin-installer/v)](https://packagist.org/packages/nuonic/plugin-installer) [![Total Downloads](http://poser.pugx.org/nuonic/plugin-installer/downloads)](https://packagist.org/packages/nuonic/plugin-installer) [![License](http://poser.pugx.org/nuonic/plugin-installer/license)](https://packagist.org/packages/nuonic/plugin-installer)
 
 This plugin allows to install all open-source plugins present in the https://packagist.org/ composer registry.
 
