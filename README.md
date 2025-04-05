@@ -10,6 +10,6 @@ This plugin will also keep itself up to date as it is available through https://
 
 ## Screenshots
 
-![Plugin List EN](https://raw.githubusercontent.com/nuonic-digital/plugin-installer/main/src/Resources/store/images/en/0.png)
+![Plugin List EN](./src/Resources/store/images/en/0.png)
 
-![Plugin List EN](https://raw.githubusercontent.com/nuonic-digital/plugin-installer/main/src/Resources/store/images/de/0.png)
+![Plugin List EN](./src/Resources/store/images/de/0.png)
