@@ -71,6 +71,7 @@ readonly class LoadPluginAction
             'license' => $version['license'][0] ?? 'UNKNOWN',
             'link' => $repositoryUrl,
             'availableVersion' => $version['version'],
+            'packagistDownloads' => $packagistData['package']['downloads']['total'] ?? 0,
         ];
 
         if ('' === trim($pluginData['manufacturer'])) {

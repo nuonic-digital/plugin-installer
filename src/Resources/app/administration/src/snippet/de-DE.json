@@ -20,7 +20,8 @@
       "install": "Installieren",
       "lastCommit": "Letzter Commit am:",
       "license": "Lizenz:",
-      "manufacturer": "Hersteller:"
+      "manufacturer": "Hersteller:",
+      "downloads": "Downloads:"
     },
     "notification": {
       "installFailed": "Installation fehlgeschlagen"

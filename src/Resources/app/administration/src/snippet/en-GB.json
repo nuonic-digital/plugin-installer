@@ -20,7 +20,8 @@
       "install": "Install",
       "lastCommit": "Last commit on:",
       "license": "License:",
-      "manufacturer": "Manufacturer:"
+      "manufacturer": "Manufacturer:",
+      "downloads": "Downloads:"
     },
     "notification": {
       "installFailed": "Installation failed"
