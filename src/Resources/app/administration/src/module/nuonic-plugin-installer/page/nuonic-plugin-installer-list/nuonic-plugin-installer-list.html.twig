@@ -5,7 +5,7 @@
         </template>
         <template #smart-bar-header>
             <h2>
-                {{ $tc('nuonic-plugin-installer.list.title') }}
+                {{ $tc('nuonic-plugin-installer.list.title') }} ({{ total }})
             </h2>
         </template>
         <template #content>
@@ -18,6 +18,24 @@
                     <sw-pagination :total="total" :limit="limit" :page="page" @page-change="changePage" />
                 </div>
             </div>
+        </template>
+        <template #sidebar>
+            <sw-sidebar class="sw-customer-list__sidebar">
+                    <sw-sidebar-item
+                            icon="regular-undo"
+                            :title="$tc('nuonic-plugin-installer.list.titleSidebarItemRefresh')"
+                            @click="onRefresh"
+                    />
+
+                    <sw-sidebar-filter-panel
+                            entity="nuonic_available_opensource_plugin"
+                            :store-key="storeKey"
+                            :filters="listFilters"
+                            :defaults="defaultFilters"
+                            :active-filter-number="activeFilterNumber"
+                            @criteria-changed="updateCriteria"
+                    />
+            </sw-sidebar>
         </template>
     </sw-page>
 {% endblock %}

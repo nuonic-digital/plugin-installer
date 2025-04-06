@@ -13,7 +13,29 @@
       }
     },
     "list": {
-      "title": "OpenSource Plugin Installer"
+      "title": "OpenSource Plugin Installer",
+      "titleSidebarItemRefresh": "Refresh",
+      "filters": {
+        "nameFilter": {
+          "label": "Name",
+          "placeholder": "Search for name..."
+        },
+        "descriptionFilter": {
+          "label": "Description",
+          "placeholder": "Search for description..."
+        },
+        "manufacturerFilter": {
+          "label": "Manufacturer",
+          "placeholder": "Search for manufacturer..."
+        },
+        "licenseFilter": {
+          "label": "License",
+          "placeholder": "Select license..."
+        },
+        "lastCommitFilter": {
+          "label": "Last commit"
+        }
+      }
     },
     "cards": {
       "version": "Version:",
