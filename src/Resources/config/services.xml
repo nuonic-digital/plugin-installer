@@ -26,6 +26,7 @@
             <argument type="service" id="http_client" />
             <argument type="service" id="cache.app"/>
             <argument type="service" id="language.repository"/>
+            <argument type="service" id="notification.repository" />
             <argument>%kernel.shopware_version%</argument>
         </service>
 
