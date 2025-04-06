@@ -34,6 +34,8 @@ class AvailableOpensourcePluginEntity extends Entity
 
     protected string $availableVersion;
 
+    protected int $packagistDownloads;
+
     protected \DateTimeInterface $lastSeenAt;
 
     protected \DateTimeInterface $lastCommitTime;
@@ -146,6 +148,16 @@ class AvailableOpensourcePluginEntity extends Entity
     public function setAvailableVersion(string $availableVersion): void
     {
         $this->availableVersion = $availableVersion;
+    }
+
+    public function getPackagistDownloads(): int
+    {
+        return $this->packagistDownloads;
+    }
+
+    public function setPackagistDownloads(int $packagistDownloads): void
+    {
+        $this->packagistDownloads = $packagistDownloads;
     }
 
     public function getPluginId(): ?string

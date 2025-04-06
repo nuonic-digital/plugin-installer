@@ -12,6 +12,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\PrimaryKey;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\IdField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\IntField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\JsonField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToOneAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
@@ -53,6 +54,7 @@ class AvailableOpensourcePluginDefinition extends EntityDefinition
             (new StringField('license', 'license'))->addFlags(new Required()),
             (new StringField('link', 'link'))->addFlags(new Required()),
             (new StringField('available_version', 'availableVersion'))->addFlags(new Required()),
+            (new IntField('packagist_downloads', 'packagistDownloads'))->addFlags(new Required()),
             (new DateField('last_seen_at', 'lastSeenAt'))->addFlags(new Required()),
             (new DateField('last_commit_time', 'lastCommitTime'))->addFlags(new Required()),
 

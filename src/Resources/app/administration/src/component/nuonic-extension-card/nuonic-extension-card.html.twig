@@ -22,6 +22,10 @@
 				{{ $tc('nuonic-plugin-installer.cards.license') }}
 				{{ extension.license }}
 			</span>
+			<br />
+			<a :href="'https://packagist.org/packages/' + extension.packageName + '/stats'" target="_blank" class="nuonic-extension-card-base__info-downloads">
+				{{ $tc('nuonic-plugin-installer.cards.downloads') }} {{ extension.packagistDownloads }}
+			</a>
 		</section>
 	</div>
 

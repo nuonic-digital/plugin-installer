@@ -26,7 +26,8 @@
       "installedAt": "Installed on:",
       "license": "License:",
       "manufacturer": "Manufacturer:",
-      "update": "Update"
+      "update": "Update",
+      "downloads": "Downloads:"
     },
     "notification": {
       "installFailed": "Installation failed"

@@ -17,8 +17,8 @@ Component.register('nuonic-plugin-installer-list', {
 			limit: 25,
 			total: 0,
 			term: null,
-			sortBy: 'name',
-			sortDirection: 'ASC',
+			sortBy: 'packagistDownloads',
+			sortDirection: 'DESC',
 			loading: false,
 		};
 	},
