@@ -39,7 +39,7 @@ readonly class RefreshAction
                 continue;
             }
 
-            $this->loadPluginAction->execute($package, new \DateTime());
+            $this->loadPluginAction->execute($package, new \DateTime(), $context);
         }
     }
 }

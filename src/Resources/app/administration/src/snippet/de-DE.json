@@ -16,37 +16,43 @@
     "list": {
       "title": "OpenSource Plugin Installer",
       "filters": {
-      "nameFilter": {
-        "label": "Name",
-        "placeholder": "Suche nach Namen..."
+        "nameFilter": {
+          "label": "Name",
+          "placeholder": "Suche nach Namen..."
+        },
+        "descriptionFilter": {
+          "label": "Beschreibung",
+          "placeholder": "Suche nach Beschreibung..."
+        },
+        "manufacturerFilter": {
+          "label": "Hersteller",
+          "placeholder": "Suche nach Hersteller..."
+        },
+        "licenseFilter": {
+          "label": "Licenz",
+          "placeholder": "Selectiere Lizenz..."
+        },
+        "lastCommitFilter": {
+          "label": "Letztes Commit"
+        },
+        "noResults": {
+          "title": "Kleine Plugins gefunden",
+          "description": "Versuche deine Suche oder Filterkriterien zu ändern."
+        }
       },
-      "descriptionFilter": {
-        "label": "Beschreibung",
-        "placeholder": "Suche nach Beschreibung..."
-      },
-      "manufacturerFilter": {
-        "label": "Hersteller",
-        "placeholder": "Suche nach Hersteller..."
-      },
-      "licenseFilter": {
-        "label": "Licenz",
-        "placeholder": "Selectiere Lizenz..."
-      },
-      "lastCommitFilter": {
-        "label": "Letztes Commit"
-      },
-      "noResults": {
-        "title": "Kleine Plugins gefunden",
-        "description": "Versuche deine Suche oder Filterkriterien zu ändern."
+      "emptyState": {
+        "title": "Keine Plugins gefunden",
+        "subline": "Überprüfe, ob die geplanten Aufgaben korrekt ausgeführt werden und dass eine korrekte Plugin-Liste in der Plugin-Konfiguration eingestellt ist."
       }
-    }
     },
     "cards": {
       "version": "Version:",
       "install": "Installieren",
       "lastCommit": "Letzter Commit am:",
+      "installedAt": "Installiert am:",
       "license": "Lizenz:",
-      "manufacturer": "Hersteller:"
+      "manufacturer": "Hersteller:",
+      "update": "Aktualisieren"
     },
     "notification": {
       "installFailed": "Installation fehlgeschlagen"

@@ -22,7 +22,7 @@ Component.register('nuonic-plugin-installer-list', {
 			term: null,
 			sortBy: 'name',
 			sortDirection: 'ASC',
-			loading: false,
+			isLoading: false,
 			filterCriteria: [],
 			activeFilterNumber: 0,
 			defaultFilters: [

@@ -38,6 +38,10 @@
         "noResults": {
           "title": "No plugins found",
           "description": "Try changing your search or filter criteria."
+        },
+        "emptyState": {
+          "title": "No plugins found",
+          "subline": "Try changing your search or filter criteria. Otherwise, check that the scheduled tasks are executed correctly and that a correct plugin list is set in the plugin configuration."
         }
       }
     },
@@ -45,8 +49,10 @@
       "version": "Version:",
       "install": "Install",
       "lastCommit": "Last commit on:",
+      "installedAt": "Installed on:",
       "license": "License:",
-      "manufacturer": "Manufacturer:"
+      "manufacturer": "Manufacturer:",
+      "update": "Update"
     },
     "notification": {
       "installFailed": "Installation failed"

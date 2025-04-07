@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace NuonicPluginInstaller\Action;
 
 use Composer\Semver\Semver;
+use NuonicPluginInstaller\Core\Framework\Plugin\AvailableOpensourcePlugin\AvailableOpensourcePluginCollection;
 use NuonicPluginInstaller\Core\Framework\Plugin\AvailableOpensourcePlugin\AvailableOpensourcePluginEntity;
 use NuonicPluginInstaller\Service\IndexFileServiceInterface;
 use NuonicPluginInstaller\Struct\PackageIndexEntry;
+use Shopware\Administration\Notification\NotificationCollection;
 use Shopware\Core\Framework\Adapter\Cache\CacheValueCompressor;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\Framework\Plugin\PluginCollection;
 use Shopware\Core\Framework\Uuid\Uuid;
+use Shopware\Core\System\Language\LanguageCollection;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
@@ -25,17 +29,25 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 readonly class LoadPluginAction
 {
+    /**
+     * @param EntityRepository<AvailableOpensourcePluginCollection> $availableOpensourcePluginRepository
+     * @param EntityRepository<LanguageCollection>                  $languageRepository
+     * @param EntityRepository<NotificationCollection>              $notificationRepository
+     * @param EntityRepository<PluginCollection>                    $pluginRepository
+     */
     public function __construct(
         private EntityRepository $availableOpensourcePluginRepository,
         private IndexFileServiceInterface $indexFileService,
         private HttpClientInterface $httpClient,
         private CacheInterface $cache,
         private EntityRepository $languageRepository,
+        private EntityRepository $notificationRepository,
+        private EntityRepository $pluginRepository,
         private string $shopwareVersion,
     ) {
     }
 
-    public function execute(string|PackageIndexEntry $packageInformation, \DateTimeInterface $now): void
+    public function execute(string|PackageIndexEntry $packageInformation, \DateTimeInterface $now, Context $context): void
     {
         if (!$packageInformation instanceof PackageIndexEntry) {
             $packageInformation = $this->indexFileService->getPackageInformation($packageInformation);
@@ -104,8 +116,10 @@ readonly class LoadPluginAction
 
         /** @var AvailableOpensourcePluginEntity|null $plugin */
         $plugin = $this->availableOpensourcePluginRepository->search(
-            (new Criteria())->addFilter(new EqualsFilter('packageName', $packageInformation->packageName)),
-            Context::createDefaultContext()
+            (new Criteria())
+                ->addFilter(new EqualsFilter('packageName', $packageInformation->packageName))
+                ->addAssociation('plugin'),
+            $context
         )->first();
 
         $id = $plugin?->getId() ?? Uuid::randomHex();
@@ -114,7 +128,19 @@ readonly class LoadPluginAction
         $pluginData['lastSeenAt'] = $now;
         $pluginData['lastCommitTime'] = $packageInformation->latestCommitTime;
 
-        $this->availableOpensourcePluginRepository->upsert([$pluginData], Context::createDefaultContext());
+        if (is_null($plugin) || is_null($plugin->getPluginId())) {
+            $pluginData['pluginId'] = $this->determineExistingPluginId($pluginData, $context);
+        }
+
+        $this->availableOpensourcePluginRepository->upsert([$pluginData], $context);
+
+        if (!is_null($plugin)) {
+            $this->handleUpdateNotification(
+                $plugin,
+                $pluginData,
+                $context
+            );
+        }
     }
 
     private function fetchExtensionYmlData(string $mainExtensionYmlUrl, string $githubUrl): array
@@ -226,5 +252,41 @@ readonly class LoadPluginAction
         });
 
         return CacheValueCompressor::uncompress($value);
+    }
+
+    private function handleUpdateNotification(
+        AvailableOpensourcePluginEntity $plugin,
+        array $pluginData,
+        Context $context,
+    ): void {
+        $swPlugin = $plugin->getPlugin() ?? (isset($pluginData['pluginId']) ? $this->pluginRepository->search(
+            new Criteria([$pluginData['pluginId']]),
+            $context
+        )->first() : null);
+
+        if (is_null($swPlugin) || is_null($swPlugin->getInstalledAt())) {
+            return;
+        }
+
+        if (1 !== version_compare($pluginData['availableVersion'], $swPlugin->getVersion())) {
+            return;
+        }
+
+        $context->scope(Context::SYSTEM_SCOPE, function (Context $context) use ($swPlugin): void {
+            $this->notificationRepository->create([[
+                'id' => Uuid::randomHex(),
+                'status' => 'info',
+                'message' => 'Update available for plugin '.$swPlugin->getName(),
+                'requiredPrivileges' => [],
+            ]], $context);
+        });
+    }
+
+    private function determineExistingPluginId(array $pluginData, Context $context): ?string
+    {
+        return $this->pluginRepository->searchIds(
+            (new Criteria())->addFilter(new EqualsFilter('composerName', $pluginData['packageName'])),
+            $context
+        )->firstId();
     }
 }

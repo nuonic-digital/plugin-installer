@@ -1,9 +1,8 @@
 import template from './nuonic-extension-card.html.twig';
 import './nuonic-extension-card.scss';
+import { compareVersions } from 'compare-versions';
 
-const { Component, Mixin } = Shopware;
-const { Criteria } = Shopware.Data;
-const { Utils, Filter } = Shopware;
+const { Component, Mixin, Filter } = Shopware;
 
 Component.register('nuonic-extension-card', {
 	template,
@@ -58,16 +57,19 @@ Component.register('nuonic-extension-card', {
 			return installed;
 		},
 
+		isUpdateAvailable() {
+			if (this.isInstalled) {
+				return compareVersions(this.extension.availableVersion, this.extension.plugin.version);
+			}
+			return false;
+		},
+
 		assetFilter() {
 			return Filter.getByName('asset');
 		},
 	},
 
 	methods: {
-		emitUpdateList() {
-			this.$emit('update-list');
-		},
-
 		onInstall() {
 			this.isLoading = true;
 
@@ -88,6 +90,10 @@ Component.register('nuonic-extension-card', {
 						error,
 					});
 				});
+		},
+
+		onUpdate() {
+			this.onInstall();
 		},
 	},
 });

@@ -42,7 +42,10 @@
 				{{ $tc('nuonic-plugin-installer.cards.lastCommit') }}
 				{{ dateFilter(extension.lastCommitTime, { month: 'numeric', year: 'numeric', hour: undefined, minute: undefined }) }}
 			</span>
-
+			<span	v-if="isInstalled"	class="nuonic-extension-card-base__meta-info-last-commit">
+				{{ $tc('nuonic-plugin-installer.cards.installedAt') }}
+				{{ dateFilter(extension.plugin.installedAt, { month: 'numeric', year: 'numeric', hour: undefined, minute: undefined }) }}
+			</span>
 		</section>
 
 	</div>
@@ -50,6 +53,13 @@
 	<div	class="nuonic-extension-card-base__main-action">
 		<span	v-if="!isInstalled"	class="nuonic-extension-card-base__open-extension"	role="button"	tabindex="0"	@click="onInstall">
 			{{ $tc('nuonic-plugin-installer.cards.install') }}
+		</span>
+		<span	v-if="isUpdateAvailable"	class="nuonic-extension-card-base__open-extension"	role="button"	tabindex="0"	@click="onUpdate">
+			{{ $tc('nuonic-plugin-installer.cards.update') }}
+		</span>
+		<span	v-if="isInstalled && !isUpdateAvailable"	class="nuonic-extension-card-base__open-extension as-info">
+
+			<sw-icon	name="regular-check-circle"	color="#22bb33"></sw-icon>
 		</span>
 	</div>
 
