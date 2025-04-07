@@ -127,6 +127,10 @@ Component.register('nuonic-plugin-installer-list', {
 		listFilters() {
 			return this.filterFactory.create('nuonic_available_opensource_plugin', this.listFilterOptions);
 		},
+
+		assetFilter() {
+			return Shopware.Filter.getByName('asset');
+		},
 	},
 
 	methods: {
@@ -149,6 +153,10 @@ Component.register('nuonic-plugin-installer-list', {
 			} catch {
 				this.isLoading = false;
 			}
+		},
+
+		onChangeLanguage() {
+			this.getList();
 		},
 
 		changePage({ page = 1, limit = 10 }) {

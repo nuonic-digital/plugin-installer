@@ -3,14 +3,37 @@
         <template #search-bar>
             <sw-search-bar initial-search-type="nuonic_available_opensource_plugin" :placeholder="$tc('nuonic-plugin-installer.extension.listing.placeholderSearchBar')" @search="onSearch" />
         </template>
+
         <template #smart-bar-header>
             <h2>
-                {{ $tc('nuonic-plugin-installer.list.title') }} ({{ total }})
+                {{ $tc('nuonic-plugin-installer.list.title') }} ({{ availablePlugins.total }})
             </h2>
         </template>
+
+        <template #language-switch>
+            <sw-language-switch @on-change="onChangeLanguage" />
+        </template>
+
         <template #content>
             <div class="nuonic-plugin-installer-index">
                 <sw-skeleton v-if="isLoading" :variant="skeletonVariant" />
+                <sw-card
+                        v-else-if="!isLoading && availablePlugins.total === 0"
+                        class="nuonic-plugin-installer-index__no-results"
+                >
+                    <img
+                        :src="assetFilter('administration/static/img/empty-states/extensions-empty-state.svg')"
+                        alt=""
+                    >
+
+                    <h3>
+                        {{ $tc('nuonic-plugin-installer.list.filters.noResults.title') }}
+                    </h3>
+
+                    <p>
+                        {{ $tc('nuonic-plugin-installer.list.filters.noResults.description') }}
+                    </p>
+                </sw-card>
                 <div v-else class="nuonic-plugin-installer-index__listing-grid">
                     <template v-for="entry in availablePlugins" :key="entry.id">
                         <component :is="'nuonic-extension-card'" :extension="entry" />
@@ -19,6 +42,7 @@
                 </div>
             </div>
         </template>
+
         <template #sidebar>
             <sw-sidebar class="sw-customer-list__sidebar">
                     <sw-sidebar-item

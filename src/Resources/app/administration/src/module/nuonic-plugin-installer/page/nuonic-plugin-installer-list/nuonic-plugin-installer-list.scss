@@ -1,3 +1,22 @@
 .nuonic-plugin-installer-index {
 	padding: 1rem 0;
 }
+
+.nuonic-plugin-installer-index__no-results {
+	text-align: center;
+	margin-top: 48px;
+	padding: 56px 32px;
+	background-color: #fff;
+	.sw-card__content {
+		h3 {
+			font-size: 18px;
+			font-weight: bold;
+		}
+		img {
+			margin-bottom: 24px;
+		}
+		p {
+			font-size: 14px;
+		}
+	}
+}
