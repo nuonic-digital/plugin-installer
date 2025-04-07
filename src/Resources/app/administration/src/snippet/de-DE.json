@@ -26,7 +26,8 @@
       "installedAt": "Installiert am:",
       "license": "Lizenz:",
       "manufacturer": "Hersteller:",
-      "update": "Aktualisieren"
+      "update": "Aktualisieren",
+      "downloads": "Downloads:"
     },
     "notification": {
       "installFailed": "Installation fehlgeschlagen"
