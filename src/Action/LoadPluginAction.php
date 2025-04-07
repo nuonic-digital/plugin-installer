@@ -29,6 +29,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 readonly class LoadPluginAction
 {
+    private const LANG_EN_GB = 'en-GB';
+    private const LANG_DE_DE = 'de-DE';
+
     /**
      * @param EntityRepository<AvailableOpensourcePluginCollection> $availableOpensourcePluginRepository
      * @param EntityRepository<LanguageCollection>                  $languageRepository
@@ -90,28 +93,38 @@ readonly class LoadPluginAction
             $pluginData['manufacturer'] = 'UNKNOWN';
         }
 
-        if (!isset($pluginData['description']['en-GB'])) {
-            $pluginData['description']['en-GB'] = !empty($version['extra']['description']['en-GB'])
-                ? $version['extra']['description']['en-GB']
+        if (!isset($pluginData['description'][self::LANG_EN_GB])) {
+            $pluginData['description'][self::LANG_EN_GB] = !empty($version['extra']['description'][self::LANG_EN_GB])
+                ? $version['extra']['description'][self::LANG_EN_GB]
                 : $packageInformation->packageName;
         }
 
-        if (!isset($pluginData['description']['de-DE'])) {
-            $pluginData['description']['de-DE'] = !empty($version['extra']['description']['de-DE'])
-                ? $version['extra']['description']['de-DE']
+        if (!isset($pluginData['description'][self::LANG_DE_DE])) {
+            $pluginData['description'][self::LANG_DE_DE] = !empty($version['extra']['description'][self::LANG_DE_DE])
+                ? $version['extra']['description'][self::LANG_DE_DE]
                 : $packageInformation->packageName;
         }
 
-        $pluginData['name']['de-DE'] = $version['extra']['label']['de-DE'] ?? $packageInformation->packageName;
-        $pluginData['name']['en-GB'] = $version['extra']['label']['en-GB'] ?? $packageInformation->packageName;
+        $pluginData['name'][self::LANG_DE_DE] = $version['extra']['label'][self::LANG_DE_DE] ?? $packageInformation->packageName;
+        $pluginData['name'][self::LANG_EN_GB] = $version['extra']['label'][self::LANG_EN_GB] ?? $packageInformation->packageName;
 
-        $langIdDe = $this->loadLanguageId('de-DE');
-        $langIdEn = $this->loadLanguageId('en-GB');
+        $pluginData['translations'] = [];
 
-        $pluginData['translations'] = [
-            ['languageId' => $langIdDe, 'name' => $pluginData['name']['de-DE'], 'description' => $pluginData['description']['de-DE']],
-            ['languageId' => $langIdEn, 'name' => $pluginData['name']['en-GB'], 'description' => $pluginData['description']['en-GB']],
-        ];
+        if ($langIdDe = $this->loadLanguageId(self::LANG_DE_DE)) {
+            $pluginData['translations'][] = [
+                'languageId' => $langIdDe,
+                'name' => $pluginData['name'][self::LANG_DE_DE],
+                'description' => $pluginData['description'][self::LANG_DE_DE],
+            ];
+        }
+
+        if ($langIdEn = $this->loadLanguageId(self::LANG_EN_GB)) {
+            $pluginData['translations'][] = [
+                'languageId' => $langIdEn,
+                'name' => $pluginData['name'][self::LANG_EN_GB],
+                'description' => $pluginData['description'][self::LANG_EN_GB],
+            ];
+        }
 
         unset($pluginData['description'], $pluginData['name']);
 
@@ -166,12 +179,12 @@ readonly class LoadPluginAction
             if (isset($extensionYmlData['store']['description']['en'])
                 && !str_starts_with($extensionYmlData['store']['description']['en'], 'file:')
             ) {
-                $pluginData['description']['en-GB'] = $extensionYmlData['store']['description']['en'];
+                $pluginData['description'][self::LANG_EN_GB] = $extensionYmlData['store']['description']['en'];
             }
             if (isset($extensionYmlData['store']['description']['de'])
                 && !str_starts_with($extensionYmlData['store']['description']['de'], 'file:')
             ) {
-                $pluginData['description']['de-DE'] = $extensionYmlData['store']['description']['de'];
+                $pluginData['description'][self::LANG_DE_DE] = $extensionYmlData['store']['description']['de'];
             }
         }
 
@@ -237,7 +250,7 @@ readonly class LoadPluginAction
         return Semver::satisfies($version, $constraint);
     }
 
-    private function loadLanguageId(string $locale): string
+    private function loadLanguageId(string $locale): ?string
     {
         $key = 'nuonic-plugin-locale-'.$locale;
         $context = Context::createDefaultContext();
