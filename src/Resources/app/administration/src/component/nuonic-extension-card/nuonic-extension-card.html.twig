@@ -22,10 +22,6 @@
 				{{ $tc('nuonic-plugin-installer.cards.license') }}
 				{{ extension.license }}
 			</span>
-			<br />
-			<a :href="'https://packagist.org/packages/' + extension.packageName + '/stats'" target="_blank" class="nuonic-extension-card-base__info-downloads">
-				{{ $tc('nuonic-plugin-installer.cards.downloads') }} {{ extension.packagistDownloads }}
-			</a>
 		</section>
 	</div>
 
@@ -41,6 +37,10 @@
 				{{ $tc('nuonic-plugin-installer.cards.version') }}
 				{{ extension.availableVersion }}
 			</span>
+			<br />
+			<a :href="'https://packagist.org/packages/' + extension.packageName + '/stats'" target="_blank" class="nuonic-extension-card-base__meta-info-downloads">
+				{{ $tc('nuonic-plugin-installer.cards.downloads') }} {{ extension.packagistDownloads }}
+			</a>
 			<br/>
 			<span	v-if="extension.lastCommitTime"	class="nuonic-extension-card-base__meta-info-last-commit">
 				{{ $tc('nuonic-plugin-installer.cards.lastCommit') }}
