@@ -2,7 +2,6 @@
 @import "~scss/mixins";
 
 .nuonic-extension-card-base {
-
 	margin: 0 auto 1rem;
 
 	.sw-loader {
@@ -58,6 +57,10 @@
 		&-version {
 			font-weight: $font-weight-semi-bold;
 		}
+	}
+
+	a.nuonic-extension-card-base__meta-info-downloads {
+		font-size: $font-size-xxs;
 	}
 
 	.nuonic-extension-card-base__open-extension {
