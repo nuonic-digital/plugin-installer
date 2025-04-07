@@ -7,6 +7,7 @@
   "nuonic-plugin-installer": {
     "extension": {
       "title": "OpenSource Plugin Installer",
+      "titleSidebarItemRefresh": "Aktualisieren",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel diam mi. Quisque consectetur condimentum blandit. Integer nunc nisi, porttitor sed nunc bibendum, vestibulum.",
       "listing": {
         "placeholderSearchBar": "Suche nach Plugins..."
@@ -14,6 +15,31 @@
     },
     "list": {
       "title": "OpenSource Plugin Installer",
+      "filters": {
+        "nameFilter": {
+          "label": "Name",
+          "placeholder": "Suche nach Namen..."
+        },
+        "descriptionFilter": {
+          "label": "Beschreibung",
+          "placeholder": "Suche nach Beschreibung..."
+        },
+        "manufacturerFilter": {
+          "label": "Hersteller",
+          "placeholder": "Suche nach Hersteller..."
+        },
+        "licenseFilter": {
+          "label": "Licenz",
+          "placeholder": "Selectiere Lizenz..."
+        },
+        "lastCommitFilter": {
+          "label": "Letztes Commit"
+        },
+        "noResults": {
+          "title": "Kleine Plugins gefunden",
+          "description": "Versuche deine Suche oder Filterkriterien zu ändern."
+        }
+      },
       "emptyState": {
         "title": "Keine Plugins gefunden",
         "subline": "Überprüfe, ob die geplanten Aufgaben korrekt ausgeführt werden und dass eine korrekte Plugin-Liste in der Plugin-Konfiguration eingestellt ist."

@@ -14,9 +14,35 @@
     },
     "list": {
       "title": "OpenSource Plugin Installer",
-      "emptyState": {
-        "title": "No plugins found",
-        "subline": "Please check if the scheduled tasks are running correctly and a correct plugin list is set in the plugin configuration."
+      "titleSidebarItemRefresh": "Refresh",
+      "filters": {
+        "nameFilter": {
+          "label": "Name",
+          "placeholder": "Search for name..."
+        },
+        "descriptionFilter": {
+          "label": "Description",
+          "placeholder": "Search for description..."
+        },
+        "manufacturerFilter": {
+          "label": "Manufacturer",
+          "placeholder": "Search for manufacturer..."
+        },
+        "licenseFilter": {
+          "label": "License",
+          "placeholder": "Select license..."
+        },
+        "lastCommitFilter": {
+          "label": "Last commit"
+        },
+        "noResults": {
+          "title": "No plugins found",
+          "description": "Try changing your search or filter criteria."
+        },
+        "emptyState": {
+          "title": "No plugins found",
+          "subline": "Try changing your search or filter criteria. Otherwise, check that the scheduled tasks are executed correctly and that a correct plugin list is set in the plugin configuration."
+        }
       }
     },
     "cards": {

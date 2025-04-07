@@ -3,14 +3,26 @@
         <template #search-bar>
             <sw-search-bar initial-search-type="nuonic_available_opensource_plugin" :placeholder="$tc('nuonic-plugin-installer.extension.listing.placeholderSearchBar')" @search="onSearch" />
         </template>
+
         <template #smart-bar-header>
             <h2>
-                {{ $tc('nuonic-plugin-installer.list.title') }}
+                {{ $tc('nuonic-plugin-installer.list.title') }} ({{ availablePlugins.total }})
             </h2>
         </template>
+
+        <template #language-switch>
+            <sw-language-switch @on-change="onChangeLanguage" />
+        </template>
+
         <template #content>
             <div class="nuonic-plugin-installer-index">
                 <sw-skeleton v-if="isLoading" :variant="skeletonVariant" />
+                <sw-card
+                        v-else-if="!isLoading && availablePlugins.total === 0"
+                        class="nuonic-plugin-installer-index__no-results"
+                >
+                     <sw-empty-state :title="$tc('nuonic-plugin-installer.list.emptyState.title')" :subline="$tc('nuonic-plugin-installer.list.emptyState.subline')" :icon="'regular-exclamation-triangle'" color="#ff8f00" class="nuonic-plugin-installer-index__empty-state" />
+                </sw-card>
                 <div v-else class="nuonic-plugin-installer-index__listing-grid">
                     <template v-if="total > 0">
                         <template v-for="entry in availablePlugins" :key="entry.id">
@@ -19,10 +31,29 @@
                         <sw-pagination :total="total" :limit="limit" :page="page" @page-change="changePage" />
                     </template>
                     <template v-else>
-                        <sw-empty-state :title="$tc('nuonic-plugin-installer.list.emptyState.title')" :subline="$tc('nuonic-plugin-installer.list.emptyState.subline')" :icon="'regular-exclamation-triangle'" color="#ff8f00" class="nuonic-plugin-installer-index__empty-state" />
+                        
                     </template>
                 </div>
             </div>
+        </template>
+
+        <template #sidebar>
+            <sw-sidebar class="sw-customer-list__sidebar">
+                    <sw-sidebar-item
+                            icon="regular-undo"
+                            :title="$tc('nuonic-plugin-installer.list.titleSidebarItemRefresh')"
+                            @click="onRefresh"
+                    />
+
+                    <sw-sidebar-filter-panel
+                            entity="nuonic_available_opensource_plugin"
+                            :store-key="storeKey"
+                            :filters="listFilters"
+                            :defaults="defaultFilters"
+                            :active-filter-number="activeFilterNumber"
+                            @criteria-changed="updateCriteria"
+                    />
+            </sw-sidebar>
         </template>
     </sw-page>
 {% endblock %}
