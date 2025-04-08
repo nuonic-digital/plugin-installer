@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace NuonicPluginInstaller;
 
 use Doctrine\DBAL\Connection;
+use NuonicPluginInstaller\Action\RefreshAction;
 use Shopware\Core\Framework\Plugin;
+use Shopware\Core\Framework\Plugin\Context\ActivateContext;
 use Shopware\Core\Framework\Plugin\Context\UninstallContext;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\DelegatingLoader;
@@ -46,5 +48,15 @@ class NuonicPluginInstaller extends Plugin
 
         $connection->executeStatement('DROP TABLE IF EXISTS nuonic_available_opensource_plugin_translation');
         $connection->executeStatement('DROP TABLE IF EXISTS nuonic_available_opensource_plugin');
+    }
+
+    public function activate(ActivateContext $activateContext): void
+    {
+        $this->getRefreshAction()->execute($activateContext->getContext());
+    }
+
+    private function getRefreshAction(): RefreshAction
+    {
+        return $this->container->get(RefreshAction::class);
     }
 }
