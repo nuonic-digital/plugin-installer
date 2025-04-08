@@ -11,6 +11,13 @@ This plugin will also keep itself up to date as it is available through https://
 
 ## Screenshots
 
+### English
+
 ![Plugin List EN](./src/Resources/store/images/en/0.png)
+![Plugin List EN](./src/Resources/store/images/en/1.png)
+
+### German
 
 ![Plugin List EN](./src/Resources/store/images/de/0.png)
+![Plugin List EN](./src/Resources/store/images/de/1.png)
+![Plugin List EN](./src/Resources/store/images/de/2.png)
