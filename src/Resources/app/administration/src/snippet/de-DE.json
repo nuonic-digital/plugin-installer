@@ -29,8 +29,8 @@
           "placeholder": "Suche nach Hersteller..."
         },
         "licenseFilter": {
-          "label": "Licenz",
-          "placeholder": "Selectiere Lizenz..."
+          "label": "Lizenz",
+          "placeholder": "Wähle Lizenz..."
         },
         "lastCommitFilter": {
           "label": "Letztes Commit"
