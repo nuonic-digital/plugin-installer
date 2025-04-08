@@ -2,7 +2,7 @@
   "name": "nuonic/plugin-installer",
   "description": "Allows installing all open-source plugins from Packagist, providing metadata for each, and ensures continuous updates through Packagist for streamlined maintenance.",
   "type": "shopware-platform-plugin",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "license": "MIT",
   "authors": [
     {
