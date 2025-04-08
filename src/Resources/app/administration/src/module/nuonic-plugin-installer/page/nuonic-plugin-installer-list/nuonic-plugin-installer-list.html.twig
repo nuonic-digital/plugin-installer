@@ -21,7 +21,14 @@
                         v-else-if="!isLoading && availablePlugins.total === 0"
                         class="nuonic-plugin-installer-index__no-results"
                 >
-                     <sw-empty-state :title="$tc('nuonic-plugin-installer.list.emptyState.title')" :subline="$tc('nuonic-plugin-installer.list.emptyState.subline')" :icon="'regular-exclamation-triangle'" color="#ff8f00" class="nuonic-plugin-installer-index__empty-state" />
+                     <sw-empty-state
+                         :title="$tc('nuonic-plugin-installer.list.emptyState.title')"
+                         :subline="$tc('nuonic-plugin-installer.list.emptyState.subline')"
+                         :icon="'regular-exclamation-triangle'"
+                         :absolute="false"
+                         color="#ff8f00"
+                         class="nuonic-plugin-installer-index__empty-state"
+                     />
                 </sw-card>
                 <div v-else class="nuonic-plugin-installer-index__listing-grid">
                     <template v-if="total > 0">
@@ -31,7 +38,7 @@
                         <sw-pagination :total="total" :limit="limit" :page="page" @page-change="changePage" />
                     </template>
                     <template v-else>
-                        
+
                     </template>
                 </div>
             </div>
