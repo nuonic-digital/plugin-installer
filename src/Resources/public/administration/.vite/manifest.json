@@ -1,0 +1,11 @@
+{
+  "main.js": {
+    "file": "js/nuonic-plugin-installer.js",
+    "name": "nuonic-plugin-installer",
+    "src": "main.js",
+    "isEntry": true,
+    "css": [
+      "css/nuonic-plugin-installer.css"
+    ]
+  }
+}
