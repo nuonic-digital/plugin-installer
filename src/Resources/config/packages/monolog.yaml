@@ -1,0 +1,8 @@
+monolog:
+  channels: ['nuonic_plugin_installer']
+  handlers:
+    nuonicPluginInstallerLogHandler:
+      type: rotating_file
+      path: "%kernel.logs_dir%/nuonic_plugin_installer_%kernel.environment%.log"
+      level: error
+      channels: [ "nuonic_plugin_installer" ]

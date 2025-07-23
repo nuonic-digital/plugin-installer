@@ -9,6 +9,7 @@ use NuonicPluginInstaller\Core\Framework\Plugin\AvailableOpensourcePlugin\Availa
 use NuonicPluginInstaller\Core\Framework\Plugin\AvailableOpensourcePlugin\AvailableOpensourcePluginEntity;
 use NuonicPluginInstaller\Service\IndexFileServiceInterface;
 use NuonicPluginInstaller\Struct\PackageIndexEntry;
+use Psr\Log\LoggerInterface;
 use Shopware\Administration\Notification\NotificationCollection;
 use Shopware\Core\Framework\Adapter\Cache\CacheValueCompressor;
 use Shopware\Core\Framework\Context;
@@ -46,6 +47,7 @@ readonly class LoadPluginAction
         private EntityRepository $languageRepository,
         private EntityRepository $notificationRepository,
         private EntityRepository $pluginRepository,
+        private LoggerInterface $logger,
         private string $shopwareVersion,
     ) {
     }
@@ -64,6 +66,10 @@ readonly class LoadPluginAction
         $ref = $packageInformation->ref;
 
         $packagistData = $this->getPackagistData($ref);
+
+        if (is_null($packagistData)) {
+            return;
+        }
 
         $version = $this->findSuitableVersion($packagistData);
 
@@ -232,11 +238,17 @@ readonly class LoadPluginAction
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
      */
-    private function getPackagistData(string $ref)
+    private function getPackagistData(string $ref): ?array
     {
         $response = $this->httpClient->request('GET', $ref);
 
         if (200 !== $response->getStatusCode()) {
+            $this->logger->error(sprintf("Could not fetch packagist data for %s status code: %s content: %s",
+                $ref,
+                $response->getStatusCode(),
+                $response->getContent(throw: false)
+            ));
+
             return null;
         }
 
