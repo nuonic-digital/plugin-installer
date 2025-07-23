@@ -243,7 +243,7 @@ readonly class LoadPluginAction
         $response = $this->httpClient->request('GET', $ref);
 
         if (200 !== $response->getStatusCode()) {
-            $this->logger->error(sprintf("Could not fetch packagist data for %s status code: %s content: %s",
+            $this->logger->error(sprintf('Could not fetch packagist data for %s status code: %s content: %s',
                 $ref,
                 $response->getStatusCode(),
                 $response->getContent(throw: false)
