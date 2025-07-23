@@ -2,22 +2,32 @@
   "name": "nuonic/plugin-installer",
   "description": "Allows installing all open-source plugins from Packagist, providing metadata for each, and ensures continuous updates through Packagist for streamlined maintenance.",
   "type": "shopware-platform-plugin",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "license": "MIT",
   "authors": [
     {
       "name": "nuonic Digital GmbH & Co. KG",
       "homepage": "https://nuonic.de"
+    },
+    {
+      "name": "Alexander Jank",
+      "homepage": "https://nuonic.de",
+      "role": "Developer"
+    },
+    {
+      "name": "Tobias Schäfer",
+      "email": "t.schaefer@buildit-consulting.de",
+      "role": "Developer"
     }
   ],
   "require": {
-    "shopware/core": ">=6.6.0 <6.7.0",
-    "shopware/storefront": ">=6.6.0 <6.7.0"
+    "shopware/core": ">=6.6.0 <6.8.0",
+    "shopware/storefront": ">=6.6.0 <6.8.0"
   },
   "require-dev": {
-    "phpstan/phpstan": "^2.1.2",
-    "friendsofphp/php-cs-fixer": "^3.66",
-    "shopwarelabs/phpstan-shopware": "^0.1.8"
+    "phpstan/phpstan": "^2.1.19",
+    "friendsofphp/php-cs-fixer": "^3.84",
+    "shopwarelabs/phpstan-shopware": "^0.1.11"
   },
   "scripts": {
     "phpstan": "phpstan analyse --memory-limit=2G",
