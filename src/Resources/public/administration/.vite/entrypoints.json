@@ -1,0 +1,25 @@
+{
+  "base": "/bundles/nuonicplugininstaller/administration/",
+  "entryPoints": {
+    "nuonic-plugin-installer": {
+      "css": [
+        "/bundles/nuonicplugininstaller/administration/css/nuonic-plugin-installer.css"
+      ],
+      "dynamic": [],
+      "js": [
+        "/bundles/nuonicplugininstaller/administration/js/nuonic-plugin-installer.js"
+      ],
+      "legacy": false,
+      "preload": []
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "7.0.4",
+    7,
+    0,
+    4
+  ],
+  "viteServer": null
+}
